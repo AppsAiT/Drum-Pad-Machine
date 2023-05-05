@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: APP_NAME,
       theme: ThemeData(
-        primarySwatch: Colors.cyan,
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.cyan)
+            .copyWith(background: Colors.black),
       ),
       home: MyHomePage(title: APP_NAME),
     );

@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/carouselContainer.dart';
@@ -26,7 +25,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Scaffold.of(context).openDrawer();
               },
               tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-              icon: Icon(
+              icon: const Icon(
                 Icons.menu,
                 color: Colors.black,
               ),
@@ -37,26 +36,32 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 15, bottom: 15),
-            child: CarouselSlider.builder(
-              itemCount: 10,
-              itemBuilder:
-                  (BuildContext context, int itemIndex, int pageViewIndex) =>
-                      const CaroselContainer(),
-              options: CarouselOptions(
-                height: 180,
-                enlargeCenterPage: true,
-                autoPlay: false,
-                aspectRatio: 16 / 9,
-                autoPlayCurve: Curves.fastOutSlowIn,
-                enableInfiniteScroll: true,
-                autoPlayAnimationDuration: const Duration(seconds: 3),
-                viewportFraction: 0.8,
-                scrollDirection: Axis.horizontal,
-              ),
-            ),
-          )
+          CaroselContainer(
+            title: 'Serpent King',
+            subTitle: 'Serpent King',
+            imgeUrl:
+                'https://t3.ftcdn.net/jpg/04/79/81/76/360_F_479817672_BpTyGX9qAl3rs9mHqvQUsyWXTJrkLUII.jpg',
+          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(top: 15, bottom: 15),
+          //   child: CarouselSlider.builder(
+          //     itemCount: 10,
+          //     itemBuilder:
+          //         (BuildContext context, int itemIndex, int pageViewIndex) =>
+          //             const CaroselContainer(),
+          //     options: CarouselOptions(
+          //       height: 180,
+          //       enlargeCenterPage: true,
+          //       autoPlay: false,
+          //       aspectRatio: 16 / 9,
+          //       autoPlayCurve: Curves.fastOutSlowIn,
+          //       enableInfiniteScroll: true,
+          //       autoPlayAnimationDuration: const Duration(seconds: 3),
+          //       viewportFraction: 0.8,
+          //       scrollDirection: Axis.horizontal,
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );
