@@ -9,24 +9,28 @@ class SideBar extends StatelessWidget {
     return Container(
       height: MediaQuery.of(context).size.height,
       width: 300,
-      color: const Color.fromARGB(255, 35, 35, 35),
+      color: const Color.fromARGB(255, 40, 41, 52),
       child: Center(
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 100, bottom: 80),
+              padding: const EdgeInsets.only(top: 100, bottom: 40),
               child: Container(
-                height: 60,
-                width: 60,
-                color: Colors.cyan,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('Assets/LOGO.png'),
+                  ),
+                ),
+                height: 120,
+                width: 120,
               ),
             ),
             Column(
               children: [
-                SideBarRow(Icons.support_agent_rounded, 'Support'),
-                SideBarRow(Icons.language, 'Language'),
-                SideBarRow(Icons.info_outline_rounded, 'About'),
-                SideBarRow(Icons.settings_sharp, 'Settings'),
+                const SideBarRow(Icons.support_agent_rounded, 'Support'),
+                const SideBarRow(Icons.language, 'Language'),
+                const SideBarRow(Icons.info_outline_rounded, 'About'),
+                const SideBarRow(Icons.settings_sharp, 'Settings'),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 25),
                   child: Container(
@@ -35,7 +39,7 @@ class SideBar extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                SideBarRow(Icons.diamond_outlined, 'Upgrade Plan'),
+                const SideBarRow(Icons.diamond_outlined, 'Upgrade Plan'),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
@@ -50,7 +54,7 @@ class SideBar extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                               color: Colors.white,
                             ),
-                            child: Icon(
+                            child: const Icon(
                               Icons.facebook,
                               size: 38,
                             )),

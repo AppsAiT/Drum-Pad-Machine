@@ -41,7 +41,7 @@ class CaroselContainer extends StatelessWidget {
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     bottomRight: Radius.circular(20)),
-                color: Colors.cyan,
+                color: Color.fromARGB(255, 6, 114, 128),
               ),
               child: Row(children: [
                 Padding(
@@ -50,15 +50,22 @@ class CaroselContainer extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
                       ),
                       Text(
                         subTitle,
-                        style: TextStyle(fontSize: 14),
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   ),
                 ),
+                const Spacer(),
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: InkWell(
@@ -74,15 +81,18 @@ class CaroselContainer extends StatelessWidget {
                     ),
                   ),
                 ),
-                InkWell(
-                  onTap: () {},
-                  child: const CircleAvatar(
-                    radius: 15,
-                    backgroundColor: Colors.black,
-                    child: Icon(
-                      Icons.download_for_offline_rounded,
-                      color: Colors.white,
-                      size: 30,
+                Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: InkWell(
+                    onTap: () {},
+                    child: const CircleAvatar(
+                      radius: 15,
+                      backgroundColor: Colors.black,
+                      child: Icon(
+                        Icons.download_for_offline_rounded,
+                        color: Colors.white,
+                        size: 30,
+                      ),
                     ),
                   ),
                 ),

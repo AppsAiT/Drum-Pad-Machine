@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SideBarRow extends StatelessWidget {
-  var _icon;
-  String _text;
+  final _icon;
+  final String _text;
 
-  SideBarRow(this._icon, this._text, {super.key});
+  const SideBarRow(this._icon, this._text, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +20,10 @@ class SideBarRow extends StatelessWidget {
               size: 31,
             ),
             Padding(
-              padding: EdgeInsets.only(left: 20),
+              padding: const EdgeInsets.only(left: 20),
               child: Text(
                 _text,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 17,
                 ),
