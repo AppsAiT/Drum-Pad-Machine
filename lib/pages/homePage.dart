@@ -1,12 +1,12 @@
-import 'dart:ffi';
-
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:drums_pad/navigator.dart';
+import 'package:drums_pad/pages/searchPage.dart';
 import 'package:drums_pad/widgets/containers.dart';
 import 'package:flutter/material.dart';
-
 import '../widgets/carouselContainer.dart';
 import '../widgets/containerPill.dart';
 import '../widgets/sideBar.dart';
+import '/nav1.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -18,6 +18,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int selectedIndex = 0;
+  List<IconData> data = [
+    Icons.home_outlined,
+    Icons.search,
+    Icons.add_box_outlined,
+    Icons.favorite_outline_sharp,
+    Icons.person_outline_sharp
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +51,47 @@ class _MyHomePageState extends State<MyHomePage> {
       //       );
       //     },
       //   ),
+      // ),
+      // bottomNavigationBar: BottomNavyBar(
+      //   backgroundColor: Colors.black,
+      //   selectedIndex: 0,
+      //   showElevation: true,
+      //   itemCornerRadius: 24,
+      //   curve: Curves.easeIn,
+      //   onItemSelected: (index) => setState(
+      //     () {
+      //       _currentIndex = index;
+      //       _pageController.animateToPage(index,
+      //           duration: const Duration(milliseconds: 100),
+      //           curve: Curves.easeIn);
+      //     },
+      //   ),
+      //   items: [
+      //     BottomNavyBarItem(
+      //       icon: const Icon(Icons.home),
+      //       title: const Text('Home'),
+      //       activeColor: Colors.cyan,
+      //       textAlign: TextAlign.center,
+      //     ),
+      //     BottomNavyBarItem(
+      //       icon: const Icon(Icons.search),
+      //       title: const Text('Search'),
+      //       activeColor: Colors.cyan,
+      //       textAlign: TextAlign.center,
+      //     ),
+      //     BottomNavyBarItem(
+      //       icon: const Icon(Icons.menu_book),
+      //       title: const Text('Tutorial'),
+      //       activeColor: Colors.cyan,
+      //       textAlign: TextAlign.center,
+      //     ),
+      //     BottomNavyBarItem(
+      //       icon: const Icon(Icons.music_note),
+      //       title: const Text('My Music'),
+      //       activeColor: Colors.cyan,
+      //       textAlign: TextAlign.center,
+      //     ),
+      //   ],
       // ),
       body: Stack(
         children: [
@@ -187,7 +237,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   //   itemBuilder: (context, i) => const HomePagePill(),
                   //   itemCount: 5,
                   // ),
-                  Container(
+                  SizedBox(
                     height: 40,
                     child: ListView.builder(
                       itemCount: 5,
@@ -285,7 +335,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 18),
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SearchPage()));
+                          },
                           child: Container(
                             height: 40,
                             width: MediaQuery.of(context).size.width - 110,
@@ -322,6 +377,65 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ],
             ),
+          ),
+
+          // Padding(
+          //   padding: const EdgeInsets.all(20),
+          //   child: Material(
+          //     elevation: 10,
+          //     borderRadius: BorderRadius.circular(20),
+          //     color: Colors.black,
+          //     child: Container(
+          //       height: 70,
+          //       width: double.infinity,
+          //       child: ListView.builder(
+          //         itemCount: data.length,
+          //         padding: EdgeInsets.symmetric(horizontal: 10),
+          //         itemBuilder: (ctx, i) => Padding(
+          //           padding: const EdgeInsets.symmetric(horizontal: 15),
+          //           child: GestureDetector(
+          //             onTap: () {
+          //               setState(() {
+          //                 selectedIndex = i;
+          //               });
+          //             },
+          //             child: AnimatedContainer(
+          //               duration: Duration(milliseconds: 250),
+          //               width: 35,
+          //               decoration: BoxDecoration(
+          //                 border: i == selectedIndex
+          //                     ? Border(
+          //                         top: BorderSide(
+          //                             width: 3.0, color: Colors.white))
+          //                     : null,
+          //                 gradient: i == selectedIndex
+          //                     ? LinearGradient(
+          //                         colors: [Colors.grey.shade800, Colors.black],
+          //                         begin: Alignment.topCenter,
+          //                         end: Alignment.bottomCenter)
+          //                     : null,
+          //               ),
+          //               child: Icon(
+          //                 data[i],
+          //                 size: 35,
+          //                 color: i == selectedIndex
+          //                     ? Colors.white
+          //                     : Colors.grey.shade800,
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //         scrollDirection: Axis.horizontal,
+          //       ),
+          //     ),
+          //   ),
+          // ),
+
+          Column(
+            children: const [
+              SizedBox(height: 650),
+              NaviBar(),
+            ],
           ),
         ],
       ),

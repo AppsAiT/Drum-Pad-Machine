@@ -1,5 +1,7 @@
+import 'package:drums_pad/navigator.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
+import 'nav.dart';
 import 'pages/homePage.dart';
 
 void main() {

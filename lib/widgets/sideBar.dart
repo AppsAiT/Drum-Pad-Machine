@@ -48,44 +48,47 @@ class SideBar extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(10),
                         child: Container(
-                            height: 40,
-                            width: 40,
+                            height: 35,
+                            width: 35,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               color: Colors.white,
                             ),
                             child: const Icon(
                               Icons.facebook,
-                              size: 38,
+                              size: 25,
                             )),
                       ),
+                      const Spacer(),
                       Padding(
                         padding: const EdgeInsets.all(10),
                         child: Container(
-                          height: 40,
-                          width: 40,
+                          height: 35,
+                          width: 35,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
                             color: Colors.white,
                           ),
                         ),
                       ),
+                      const Spacer(),
                       Padding(
                         padding: const EdgeInsets.all(10),
                         child: Container(
-                          height: 40,
-                          width: 40,
+                          height: 35,
+                          width: 35,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
                             color: Colors.white,
                           ),
                         ),
                       ),
+                      const Spacer(),
                       Padding(
                         padding: const EdgeInsets.all(10),
                         child: Container(
-                          height: 40,
-                          width: 40,
+                          height: 35,
+                          width: 35,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
                             color: Colors.white,
