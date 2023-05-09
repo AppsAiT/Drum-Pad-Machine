@@ -24,7 +24,7 @@ class NavigationButton extends StatelessWidget {
             size: 30,
             color: index == cindex
                 ? Colors.cyan
-                : Color.fromARGB(255, 83, 83, 103),
+                : const Color.fromARGB(255, 83, 83, 103),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 6),
@@ -34,7 +34,7 @@ class NavigationButton extends StatelessWidget {
                 fontWeight: FontWeight.w800,
                 color: index == cindex
                     ? Colors.cyan
-                    : Color.fromARGB(255, 83, 83, 103),
+                    : const Color.fromARGB(255, 83, 83, 103),
               ),
             ),
           ),

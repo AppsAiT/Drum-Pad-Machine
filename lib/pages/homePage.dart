@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:drums_pad/pages/myMusicPage.dart';
 import 'package:drums_pad/pages/searchPage.dart';
@@ -6,13 +5,11 @@ import 'package:drums_pad/pages/tutorialPage.dart';
 import 'package:drums_pad/widgets/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../constants.dart';
 import '../widgets/carouselContainer.dart';
 import '../widgets/containerPill.dart';
 import '../widgets/containers.dart';
 import '../widgets/navigationButtons.dart';
 import '../widgets/sideBar.dart';
-import '/nav1.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});

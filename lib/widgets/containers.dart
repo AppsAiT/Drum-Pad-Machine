@@ -18,40 +18,6 @@ class ContainerWithLable extends StatelessWidget {
             fit: BoxFit.cover,
           ),
           Container()
-          // Positioned(
-          //   bottom: -1,
-          //   left: -1,
-          //   right: -1,
-          //   child: Container(
-          //     decoration: BoxDecoration(
-          //       borderRadius: BorderRadius.circular(8),
-          //       border: Border.all(
-          //         color: Colors.black12,
-          //         width: 1,
-          //       ),
-          //     ),
-          //     clipBehavior: Clip.hardEdge,
-          //     child: Container(
-          //       color: Colors.black.withOpacity(0.5),
-          //       padding:
-          //           const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-          //       child: Flex(
-          //         direction: Axis.vertical,
-          //         crossAxisAlignment: CrossAxisAlignment.start,
-          //         children: [
-          //           Text('Title', style: TextStyle(color: Colors.black)),
-          //           const SizedBox(height: 8),
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          // Positioned.fill(
-          //   child: Material(
-          //     child:
-          //         InkWell(splashFactory: InkRipple.splashFactory, onTap: () {}),
-          //   ),
-          // ),
         ],
       ),
     );
@@ -110,14 +76,14 @@ class HomePageContainer extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           color: Colors.white,
                         ),
                       ),
                       Text(
                         subTitle,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 14,
                           color: Colors.white,
                         ),
