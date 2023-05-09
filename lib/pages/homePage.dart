@@ -288,7 +288,7 @@ class _MyHomePageState extends State<MyHomePage> {
             color: const Color.fromARGB(255, 83, 83, 103),
             width: 2,
           ),
-          color: Color.fromARGB(255, 21, 22, 26),
+          color: const Color.fromARGB(255, 21, 22, 26),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(.1),
