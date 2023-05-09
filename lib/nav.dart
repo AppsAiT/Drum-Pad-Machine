@@ -19,7 +19,6 @@ class HomePageState extends State<HomePage> {
     return Stack(children: [
       Scaffold(
         backgroundColor: Colors.greenAccent,
-        
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(20),
           child: Material(

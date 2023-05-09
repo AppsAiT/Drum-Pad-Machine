@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "513880157388",
+    "project_id": "drumpad-appsait",
+    "storage_bucket": "drumpad-appsait.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:513880157388:android:bad1695997df6e93516669",
+        "android_client_info": {
+          "package_name": "com.example.drums_pad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "513880157388-6jauskh5tjsjnbkbhuo7ot9uqh8i01c1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.drums_pad",
+            "certificate_hash": "a122d943231ac33d4fb39c472896a54fd5589b2f"
+          }
+        },
+        {
+          "client_id": "513880157388-g8hrciq3lh124bhont6kgd9nu8clbo6n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDk9SefRoaTPQj32jwQZGpDrnLR-W_7m7k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "513880157388-g8hrciq3lh124bhont6kgd9nu8clbo6n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

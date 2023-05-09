@@ -1,3 +1,4 @@
+import 'package:drums_pad/constants.dart';
 import 'package:flutter/material.dart';
 
 class NaviBar extends StatefulWidget {
@@ -10,9 +11,14 @@ class NaviBar extends StatefulWidget {
 class _NaviBarState extends State<NaviBar> {
   int selectedIndex = 0;
   List<IconData> data = [
-    Icons.home_outlined,
+    Icons.home_filled,
     Icons.music_video_sharp,
     Icons.play_circle_outline,
+  ];
+  List<String> titles = [
+    'Home',
+    'My Music',
+    'Tutorial',
   ];
 
   @override
@@ -20,44 +26,43 @@ class _NaviBarState extends State<NaviBar> {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Material(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+            side: const BorderSide(
+                color: Color.fromARGB(255, 57, 59, 71), width: 2)),
         elevation: 10,
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.black,
-        child: Container(
+        color: const Color.fromARGB(255, 21, 21, 27),
+        child: SizedBox(
           height: 70,
           width: double.infinity,
           child: ListView.builder(
             itemCount: data.length,
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             itemBuilder: (ctx, i) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
               child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    selectedIndex = i;
-                  });
-                },
+                onTap: () {},
                 child: AnimatedContainer(
-                  duration: Duration(milliseconds: 250),
-                  width: 35,
-                  decoration: BoxDecoration(
-                    border: i == selectedIndex
-                        ? const Border(
-                            top: BorderSide(width: 3.0, color: Colors.white))
-                        : null,
-                    gradient: i == selectedIndex
-                        ? LinearGradient(
-                            colors: [Colors.grey.shade800, Colors.black],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter)
-                        : null,
-                  ),
-                  child: Icon(
-                    data[i],
-                    size: 35,
-                    color: i == selectedIndex
-                        ? Colors.white
-                        : Colors.grey.shade800,
+                  duration: const Duration(milliseconds: 250),
+                  width: 70,
+                  child: Column(
+                    children: [
+                      Icon(
+                        data[i],
+                        size: 35,
+                        color: i == selectedIndex
+                            ? Colors.cyan
+                            : const Color.fromARGB(255, 57, 59, 71),
+                      ),
+                      Text(
+                        titles[i],
+                        style: TextStyle(
+                          color: i == selectedIndex
+                              ? Colors.cyan
+                              : const Color.fromARGB(255, 57, 59, 71),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
