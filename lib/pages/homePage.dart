@@ -23,33 +23,46 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List Songs = [];
+  // List Songs = [];
 
-  mapRecords(QuerySnapshot<Map<dynamic, dynamic>> records) {
-    var lst = records.docs
-        .map((product) => Data(
-              id: product.id,
-              title: product['title'],
-              subtitle: product['subtitle'],
-              image: product['img'],
-            ))
-        .toList();
+  // mapRecords(QuerySnapshot<Map<dynamic, dynamic>> records) {
+  //   var lst = records.docs
+  //       .map((product) => Data(
+  //             id: product.id,
+  //             title: product['title'],
+  //             subtitle: product['subtitle'],
+  //             image: product['img'],
+  //           ))
+  //       .toList();
 
-    Songs = lst;
-    setState(() {
-      Songs = lst;
-    });
-  }
+  //   Songs = lst;
+  //   setState(() {
+  //     Songs = lst;
+  //   });
+  // }
 
-  fetchData() async {
-    var records = await FirebaseFirestore.instance.collection('songs').get();
-    mapRecords(records);
-  }
+  // fetchData() async {
+  //   var records = await FirebaseFirestore.instance.collection('songs').get();
+  //   mapRecords(records);
+  // }
+  List<QueryDocumentSnapshot<Map<String, dynamic>>> _documents = [];
 
   @override
   void initState() {
-    fetchData();
     super.initState();
+    fetchDataFromFirebase();
+    print('----------------');
+  }
+
+  Future<void> fetchDataFromFirebase() async {
+    QuerySnapshot<Map<String, dynamic>> snapshot =
+        await FirebaseFirestore.instance.collection('songs').get();
+    setState(
+      () {
+        _documents = snapshot.docs;
+      },
+    );
+    print(_documents);
   }
 
   List<IconData> listOfIcons = [
@@ -116,13 +129,14 @@ class _MyHomePageState extends State<MyHomePage> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 15),
                           child: CarouselSlider.builder(
-                            itemCount: Songs.length,
+                            itemCount: 5,
                             itemBuilder: (BuildContext context, int itemIndex,
                                 int pageViewIndex) {
                               return CaroselContainer(
-                                title: Songs[itemIndex].title,
-                                subTitle: Songs[itemIndex].subtitle,
-                                imgeUrl: Songs[itemIndex].image,
+                                title: 'Songs_title',
+                                subTitle: 'Songs_subtitle',
+                                imgeUrl:
+                                    'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bXVzaWN8ZW58MHx8MHx8&w=1000&q=80',
                               );
                             },
                             options: CarouselOptions(
@@ -200,17 +214,21 @@ class _MyHomePageState extends State<MyHomePage> {
                         SizedBox(
                           height: 170,
                           child: ListView.builder(
-                            itemCount: 5,
+                            itemCount: _documents.length,
                             scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) => Padding(
-                              padding: const EdgeInsets.all(6),
-                              child: HomePageContainer(
-                                title: 'title ${index + 1}',
-                                subTitle: 'subTitle ${index + 1}',
-                                imgeUrl:
-                                    'https://t3.ftcdn.net/jpg/04/79/81/76/360_F_479817672_BpTyGX9qAl3rs9mHqvQUsyWXTJrkLUII.jpg',
-                              ),
-                            ),
+                            itemBuilder: (context, index) {
+                              Map<String, dynamic> data =
+                                  _documents[index].data();
+
+                              return Padding(
+                                padding: const EdgeInsets.all(6),
+                                child: HomePageContainer(
+                                  title: data['title'],
+                                  subTitle: data['subtitle'],
+                                  imgeUrl: data['img'],
+                                ),
+                              );
+                            },
                           ),
                         ),
                         Padding(
