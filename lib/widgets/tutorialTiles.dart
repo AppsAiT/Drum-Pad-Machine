@@ -1,4 +1,7 @@
+import 'package:drums_pad/widgets/carouselContainer.dart';
 import 'package:flutter/material.dart';
+
+import 'starRating.dart';
 
 class TutorialTile extends StatelessWidget {
   final int index;
@@ -9,14 +12,14 @@ class TutorialTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: const Color.fromARGB(255, 32, 31, 43),
-      height: 180,
+      height: 200,
       width: MediaQuery.of(context).size.width,
       child: Row(
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
             child: Column(
-              children: [
+              children: <Widget>[
                 Text(
                   'Lesson ${index + 1}',
                   style: const TextStyle(
@@ -35,6 +38,31 @@ class TutorialTile extends StatelessWidget {
                     ),
                   ),
                 ),
+                // ignore: prefer_const_constructors
+                Text(
+                  'A',
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 6),
+                  child: Text(
+                    'Current Rank',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 90,
+                  child: StarRating(totalStars: 5, stars: 3),
+                ),
               ],
             ),
           ),
@@ -46,17 +74,24 @@ class TutorialTile extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       children: [
-                        const Text(
-                          'Last Score',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          child: Text(
+                            'Last Score',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
                           ),
                         ),
                         Container(
                           height: 60,
                           width: 60,
-                          color: Colors.cyan,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            border: Border.all(color: Colors.cyan, width: 6),
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
@@ -66,17 +101,24 @@ class TutorialTile extends StatelessWidget {
                         const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     child: Column(
                       children: [
-                        const Text(
-                          'Best Score',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8),
+                          child: Text(
+                            'Best Score',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
                           ),
                         ),
                         Container(
                           height: 90,
                           width: 90,
-                          color: Colors.cyan,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            border: Border.all(color: Colors.cyan, width: 6),
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
@@ -91,6 +133,29 @@ class TutorialTile extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.cyan,
+                  ),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.play_circle_outline,
+                          color: Colors.white,
+                          size: 25,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(
+                            'Play',
+                            style: TextStyle(
+                              fontSize: 17,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),

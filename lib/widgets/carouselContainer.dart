@@ -5,7 +5,7 @@ class CaroselContainer extends StatelessWidget {
   final String subTitle;
   final String imgeUrl;
 
-  CaroselContainer(
+  const CaroselContainer(
       {super.key,
       required this.title,
       required this.subTitle,
@@ -23,13 +23,12 @@ class CaroselContainer extends StatelessWidget {
       child: Stack(children: [
         Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              image: DecorationImage(
-                image: NetworkImage(
-                  imgeUrl,
-                ),
-                fit: BoxFit.cover,
-              )),
+            borderRadius: BorderRadius.circular(20),
+            image: DecorationImage(
+              image: NetworkImage(imgeUrl),
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
         Column(
           children: [
@@ -50,14 +49,14 @@ class CaroselContainer extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           color: Colors.white,
                         ),
                       ),
                       Text(
                         subTitle,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 14,
                           color: Colors.white,
                         ),

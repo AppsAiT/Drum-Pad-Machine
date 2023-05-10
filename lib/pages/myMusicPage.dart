@@ -1,7 +1,7 @@
 import 'package:drums_pad/constants.dart';
 import 'package:drums_pad/widgets/myMusicButtons.dart';
 import 'package:flutter/material.dart';
-
+import 'NewProjectPage.dart';
 import 'homePage.dart';
 
 class MyMusicPage extends StatelessWidget {
@@ -62,7 +62,14 @@ class MyMusicPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 50),
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (builder) => const NewProjectPage(),
+                  ),
+                );
+              },
               splashColor: Colors.cyan,
               child: const MyMusicButton(
                 buttonIcon: Icons.add,

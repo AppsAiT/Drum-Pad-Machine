@@ -64,12 +64,10 @@ class TutorialPage extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 83),
           child: ListView.builder(
-            itemCount: 2,
+            itemCount: 3,
             itemBuilder: (context, index) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
-              child: TutorialTile(
-                index: index,
-              ),
+              child: TutorialTile(index: index),
             ),
           ),
         ),

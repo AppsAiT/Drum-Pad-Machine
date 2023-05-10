@@ -1,4 +1,7 @@
+import 'package:drums_pad/pages/upgradePlanPage.dart';
 import 'package:flutter/material.dart';
+import '../constants.dart';
+import '../pages/homePage.dart';
 import 'sideBar_row.dart';
 
 class SideBar extends StatelessWidget {
@@ -39,7 +42,19 @@ class SideBar extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                const SideBarRow(Icons.diamond_outlined, 'Upgrade Plan'),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const UpgradePlanPage(),
+                      ),
+                    );
+                  },
+                  child: const SizedBox(
+                    child: SideBarRow(Icons.diamond_outlined, 'Upgrade Plan'),
+                  ),
+                ),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 25),

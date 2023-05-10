@@ -1,10 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drums_pad/pages/myMusicPage.dart';
 import 'package:drums_pad/pages/searchPage.dart';
 import 'package:drums_pad/pages/tutorialPage.dart';
 import 'package:drums_pad/widgets/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../data/fetch.dart';
 import '../widgets/carouselContainer.dart';
 import '../widgets/containerPill.dart';
 import '../widgets/containers.dart';
@@ -21,6 +23,35 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List Songs = [];
+
+  mapRecords(QuerySnapshot<Map<dynamic, dynamic>> records) {
+    var lst = records.docs
+        .map((product) => Data(
+              id: product.id,
+              title: product['title'],
+              subtitle: product['subtitle'],
+              image: product['img'],
+            ))
+        .toList();
+
+    Songs = lst;
+    setState(() {
+      Songs = lst;
+    });
+  }
+
+  fetchData() async {
+    var records = await FirebaseFirestore.instance.collection('songs').get();
+    mapRecords(records);
+  }
+
+  @override
+  void initState() {
+    fetchData();
+    super.initState();
+  }
+
   List<IconData> listOfIcons = [
     Icons.home_filled,
     Icons.music_video,
@@ -85,15 +116,15 @@ class _MyHomePageState extends State<MyHomePage> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 15),
                           child: CarouselSlider.builder(
-                            itemCount: 10,
+                            itemCount: Songs.length,
                             itemBuilder: (BuildContext context, int itemIndex,
-                                    int pageViewIndex) =>
-                                CaroselContainer(
-                              title: 'Serpent King',
-                              subTitle: 'Serpent King',
-                              imgeUrl:
-                                  'https://t3.ftcdn.net/jpg/04/79/81/76/360_F_479817672_BpTyGX9qAl3rs9mHqvQUsyWXTJrkLUII.jpg',
-                            ),
+                                int pageViewIndex) {
+                              return CaroselContainer(
+                                title: Songs[itemIndex].title,
+                                subTitle: Songs[itemIndex].subtitle,
+                                imgeUrl: Songs[itemIndex].image,
+                              );
+                            },
                             options: CarouselOptions(
                               height: 200,
                               enlargeCenterPage: true,
