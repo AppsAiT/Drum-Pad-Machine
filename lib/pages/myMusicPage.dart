@@ -59,18 +59,25 @@ class MyMusicPage extends StatelessWidget {
               ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(top: 50),
-            child: MyMusicButton(
-              buttonIcon: Icons.add,
-              buttonText: 'New Project',
+          Padding(
+            padding: const EdgeInsets.only(top: 50),
+            child: InkWell(
+              onTap: () {},
+              splashColor: Colors.cyan,
+              child: const MyMusicButton(
+                buttonIcon: Icons.add,
+                buttonText: 'New Project',
+              ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 5),
-            child: MyMusicButton(
-              buttonIcon: Icons.camera_outlined,
-              buttonText: 'Recently Played',
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5),
+            child: InkWell(
+              onTap: () {},
+              child: const MyMusicButton(
+                buttonIcon: Icons.camera_outlined,
+                buttonText: 'Recently Played',
+              ),
             ),
           ),
         ],
