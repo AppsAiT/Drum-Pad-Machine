@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, must_be_immutable, prefer_typing_uninitialized_variables, non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 class HomePagePill extends StatelessWidget {

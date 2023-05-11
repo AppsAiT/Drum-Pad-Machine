@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:drums_pad/constants.dart';
 import 'package:drums_pad/widgets/myMusicButtons.dart';
 import 'package:flutter/material.dart';

@@ -48,7 +48,7 @@ class Home extends StatelessWidget {
                       itemCount: 10,
                       itemBuilder: (BuildContext context, int itemIndex,
                               int pageViewIndex) =>
-                          CaroselContainer(
+                          const CaroselContainer(
                         title: 'Serpent King',
                         subTitle: 'Serpent King',
                         imgeUrl:

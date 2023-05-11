@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:drums_pad/constants.dart';
 import 'package:drums_pad/pages/homePage.dart';
 import 'package:drums_pad/widgets/planContainer.dart';

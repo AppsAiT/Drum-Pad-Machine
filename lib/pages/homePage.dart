@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drums_pad/pages/myMusicPage.dart';
@@ -6,12 +8,22 @@ import 'package:drums_pad/pages/tutorialPage.dart';
 import 'package:drums_pad/widgets/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../data/fetch.dart';
 import '../widgets/carouselContainer.dart';
 import '../widgets/containerPill.dart';
 import '../widgets/containers.dart';
 import '../widgets/navigationButtons.dart';
 import '../widgets/sideBar.dart';
+import 'package:loading_indicator/loading_indicator.dart';
+
+const List<Color> _kDefaultRainbowColors = [
+  Colors.red,
+  Colors.orange,
+  Colors.yellow,
+  Colors.green,
+  Colors.blue,
+  Colors.indigo,
+  Colors.purple,
+];
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -45,25 +57,26 @@ class _MyHomePageState extends State<MyHomePage> {
   //   var records = await FirebaseFirestore.instance.collection('songs').get();
   //   mapRecords(records);
   // }
-  List<QueryDocumentSnapshot<Map<String, dynamic>>> _documents = [];
 
   @override
   void initState() {
     super.initState();
-    fetchDataFromFirebase();
-    print('----------------');
+    // fetchDataFromFirebase();
   }
 
-  Future<void> fetchDataFromFirebase() async {
-    QuerySnapshot<Map<String, dynamic>> snapshot =
-        await FirebaseFirestore.instance.collection('songs').get();
-    setState(
-      () {
-        _documents = snapshot.docs;
-      },
-    );
-    print(_documents);
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchDataFromFirebase() async {
+    return FirebaseFirestore.instance.collection('songs').get();
   }
+
+  // Future<void> fetchDataFromFirebase() async {
+  //   QuerySnapshot<Map<String, dynamic>> snapshot =
+  //       await FirebaseFirestore.instance.collection('songs').get();
+  //   setState(
+  //     () {
+  //       _documents = snapshot.docs;
+  //     },
+  //   );
+  // }
 
   List<IconData> listOfIcons = [
     Icons.home_filled,
@@ -126,32 +139,68 @@ class _MyHomePageState extends State<MyHomePage> {
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 15),
-                          child: CarouselSlider.builder(
-                            itemCount: 5,
-                            itemBuilder: (BuildContext context, int itemIndex,
-                                int pageViewIndex) {
-                              return CaroselContainer(
-                                title: 'Songs_title',
-                                subTitle: 'Songs_subtitle',
-                                imgeUrl:
-                                    'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bXVzaWN8ZW58MHx8MHx8&w=1000&q=80',
-                              );
-                            },
-                            options: CarouselOptions(
-                              height: 200,
-                              enlargeCenterPage: true,
-                              autoPlay: true,
-                              aspectRatio: 16 / 9,
-                              autoPlayCurve: Curves.fastOutSlowIn,
-                              enableInfiniteScroll: true,
-                              autoPlayAnimationDuration:
-                                  const Duration(seconds: 3),
-                              viewportFraction: 0.58,
-                              scrollDirection: Axis.horizontal,
-                            ),
-                          ),
+                        FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                          future: fetchDataFromFirebase(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              // Display a loading indicator while waiting for data
+                              return const Center(
+                                  child: SizedBox(
+                                height: 90,
+                                width: 90,
+                                child: LoadingIndicator(
+                                  indicatorType:
+                                      Indicator.lineScalePulseOutRapid,
+                                  colors: _kDefaultRainbowColors,
+                                  strokeWidth: 4.0,
+                                  pathBackgroundColor: Colors.transparent,
+                                ),
+                              ));
+                            }
+                            if (snapshot.hasError) {
+                              // Handle error if any
+                              return Center(
+                                  child: Text(
+                                      'Error occurred: ${snapshot.error}'));
+                            }
+                            if (!snapshot.hasData ||
+                                snapshot.data!.docs.isEmpty) {
+                              // Handle case when no data is available
+                              return const Center(
+                                  child: Text('No data available'));
+                            }
+                            // Data is available, display it
+                            final documents = snapshot.data!.docs;
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 15),
+                              child: CarouselSlider.builder(
+                                itemCount: documents.length,
+                                itemBuilder: (BuildContext context,
+                                    int itemIndex, int pageViewIndex) {
+                                  Map<String, dynamic> data =
+                                      documents[itemIndex].data();
+                                  return CaroselContainer(
+                                    title: data['title'],
+                                    subTitle: data['subtitle'],
+                                    imgeUrl: data['img'],
+                                  );
+                                },
+                                options: CarouselOptions(
+                                  height: 200,
+                                  enlargeCenterPage: true,
+                                  autoPlay: true,
+                                  aspectRatio: 16 / 9,
+                                  autoPlayCurve: Curves.fastOutSlowIn,
+                                  enableInfiniteScroll: true,
+                                  autoPlayAnimationDuration:
+                                      const Duration(seconds: 3),
+                                  viewportFraction: 0.58,
+                                  scrollDirection: Axis.horizontal,
+                                ),
+                              ),
+                            );
+                          },
                         ),
                         Padding(
                           padding: const EdgeInsets.all(12),
@@ -211,25 +260,60 @@ class _MyHomePageState extends State<MyHomePage> {
                             ],
                           ),
                         ),
-                        SizedBox(
-                          height: 170,
-                          child: ListView.builder(
-                            itemCount: _documents.length,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              Map<String, dynamic> data =
-                                  _documents[index].data();
-
-                              return Padding(
-                                padding: const EdgeInsets.all(6),
-                                child: HomePageContainer(
-                                  title: data['title'],
-                                  subTitle: data['subtitle'],
-                                  imgeUrl: data['img'],
+                        FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                          future: fetchDataFromFirebase(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              // Display a loading indicator while waiting for data
+                              return const Center(
+                                  child: SizedBox(
+                                height: 90,
+                                width: 90,
+                                child: LoadingIndicator(
+                                  indicatorType:
+                                      Indicator.lineScalePulseOutRapid,
+                                  colors: _kDefaultRainbowColors,
+                                  strokeWidth: 4.0,
+                                  pathBackgroundColor: Colors.transparent,
                                 ),
-                              );
-                            },
-                          ),
+                              ));
+                            }
+                            if (snapshot.hasError) {
+                              // Handle error if any
+                              return Center(
+                                  child: Text(
+                                      'Error occurred: ${snapshot.error}'));
+                            }
+                            if (!snapshot.hasData ||
+                                snapshot.data!.docs.isEmpty) {
+                              // Handle case when no data is available
+                              return const Center(
+                                  child: Text('No data available'));
+                            }
+                            // Data is available, display it
+                            final documents = snapshot.data!.docs;
+                            return SizedBox(
+                              height: 170,
+                              child: ListView.builder(
+                                itemCount: documents.length,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  Map<String, dynamic> data =
+                                      documents[index].data();
+
+                                  return Padding(
+                                    padding: const EdgeInsets.all(6),
+                                    child: HomePageContainer(
+                                      title: data['title'],
+                                      subTitle: data['subtitle'],
+                                      imgeUrl: data['img'],
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          },
                         ),
                         Padding(
                           padding: const EdgeInsets.all(12),

@@ -1,4 +1,4 @@
-import 'package:drums_pad/widgets/carouselContainer.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:flutter/material.dart';
 
 import 'starRating.dart';
@@ -84,14 +84,22 @@ class TutorialTile extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Container(
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            border: Border.all(color: Colors.cyan, width: 6),
-                            color: Colors.black,
+                        CircularPercentIndicator(
+                          radius: 35,
+                          lineWidth: 10,
+                          animation: true,
+                          percent: 0.6,
+                          center: const Text(
+                            "60%",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              color: Colors.white,
+                            ),
                           ),
+                          backgroundColor: Colors.black,
+                          circularStrokeCap: CircularStrokeCap.round,
+                          progressColor: Colors.cyan,
                         ),
                       ],
                     ),
@@ -102,7 +110,7 @@ class TutorialTile extends StatelessWidget {
                     child: Column(
                       children: [
                         const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8),
+                          padding: EdgeInsets.symmetric(vertical: 12),
                           child: Text(
                             'Best Score',
                             style: TextStyle(
@@ -111,22 +119,31 @@ class TutorialTile extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Container(
-                          height: 90,
-                          width: 90,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            border: Border.all(color: Colors.cyan, width: 6),
-                            color: Colors.black,
+                        CircularPercentIndicator(
+                          radius: 40,
+                          lineWidth: 10,
+                          animation: true,
+                          percent: 0.8,
+                          center: const Text(
+                            "80%",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.white,
+                            ),
                           ),
+                          circularStrokeCap: CircularStrokeCap.round,
+                          backgroundColor: Colors.black,
+                          progressColor: Colors.cyan,
                         ),
                       ],
                     ),
                   ),
                 ],
               ),
+              const Spacer(),
               Padding(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.only(bottom: 18),
                 child: Container(
                   height: 40,
                   width: 190,
