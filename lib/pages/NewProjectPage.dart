@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:drums_pad/pages/drumpadPage.dart';
 import 'package:drums_pad/pages/myMusicPage.dart';
 import 'package:flutter/material.dart';
 
@@ -99,37 +100,47 @@ class _NewProjectPageState extends State<NewProjectPage> {
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 100),
-            child: Container(
-              height: 50,
-              width: 200,
-              decoration: BoxDecoration(
-                color: Colors.cyan,
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    children: const [
-                      Padding(
-                        padding: EdgeInsets.only(right: 8),
-                        child: Icon(
-                          Icons.add,
-                          size: 30,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Text(
-                        'New Project',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    ],
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const DrumPadPage(),
                   ),
-                ],
+                );
+              },
+              child: Container(
+                height: 50,
+                width: 200,
+                decoration: BoxDecoration(
+                  color: Colors.cyan,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: const [
+                        Padding(
+                          padding: EdgeInsets.only(right: 8),
+                          child: Icon(
+                            Icons.add,
+                            size: 30,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          'New Project',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

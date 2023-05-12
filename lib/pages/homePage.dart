@@ -144,7 +144,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              // Display a loading indicator while waiting for data
                               return const Center(
                                   child: SizedBox(
                                 height: 90,
@@ -159,7 +158,6 @@ class _MyHomePageState extends State<MyHomePage> {
                               ));
                             }
                             if (snapshot.hasError) {
-                              // Handle error if any
                               return Center(
                                   child: Text(
                                       'Error occurred: ${snapshot.error}'));
@@ -280,14 +278,12 @@ class _MyHomePageState extends State<MyHomePage> {
                               ));
                             }
                             if (snapshot.hasError) {
-                              // Handle error if any
                               return Center(
                                   child: Text(
                                       'Error occurred: ${snapshot.error}'));
                             }
                             if (!snapshot.hasData ||
                                 snapshot.data!.docs.isEmpty) {
-                              // Handle case when no data is available
                               return const Center(
                                   child: Text('No data available'));
                             }
