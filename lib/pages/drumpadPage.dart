@@ -200,7 +200,10 @@ class _DrumPadPageState extends State<DrumPadPage> {
               ),
             ),
           ),
-          const FullDrumPad(),
+          const Padding(
+            padding: EdgeInsets.only(top: 25),
+            child: FullDrumPad(),
+          ),
         ],
       )),
     );

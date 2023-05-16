@@ -8,6 +8,7 @@ import 'package:drums_pad/pages/tutorialPage.dart';
 import 'package:drums_pad/widgets/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../widgets/carouselContainer.dart';
 import '../widgets/containerPill.dart';
 import '../widgets/containers.dart';
@@ -35,48 +36,27 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // List Songs = [];
-
-  // mapRecords(QuerySnapshot<Map<dynamic, dynamic>> records) {
-  //   var lst = records.docs
-  //       .map((product) => Data(
-  //             id: product.id,
-  //             title: product['title'],
-  //             subtitle: product['subtitle'],
-  //             image: product['img'],
-  //           ))
-  //       .toList();
-
-  //   Songs = lst;
-  //   setState(() {
-  //     Songs = lst;
-  //   });
-  // }
-
-  // fetchData() async {
-  //   var records = await FirebaseFirestore.instance.collection('songs').get();
-  //   mapRecords(records);
-  // }
-
   @override
   void initState() {
+    requestPermission();
     super.initState();
-    // fetchDataFromFirebase();
+  }
+
+  void requestPermission() async {
+    var status = await Permission.storage.status;
+    if (!status.isGranted) {
+      await Permission.storage.request();
+    }
+
+    var status2 = await Permission.manageExternalStorage.status;
+    if (!status2.isGranted) {
+      await Permission.manageExternalStorage.request();
+    }
   }
 
   Future<QuerySnapshot<Map<String, dynamic>>> fetchDataFromFirebase() async {
     return FirebaseFirestore.instance.collection('songs').get();
   }
-
-  // Future<void> fetchDataFromFirebase() async {
-  //   QuerySnapshot<Map<String, dynamic>> snapshot =
-  //       await FirebaseFirestore.instance.collection('songs').get();
-  //   setState(
-  //     () {
-  //       _documents = snapshot.docs;
-  //     },
-  //   );
-  // }
 
   List<IconData> listOfIcons = [
     Icons.home_filled,

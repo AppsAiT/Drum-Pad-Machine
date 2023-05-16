@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:drums_pad/pages/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
-import 'pages/homePage.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.cyan)
             .copyWith(background: Colors.black),
       ),
-      home: MyHomePage(title: APP_NAME),
+      home: const SplashScreen(),
     );
   }
 }

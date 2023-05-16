@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+double ver = 3;
+double hor = 3;
+
 class PadType1 extends StatelessWidget {
   const PadType1({super.key});
 
@@ -7,10 +10,10 @@ class PadType1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Flexible(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
+        padding: EdgeInsets.symmetric(vertical: ver, horizontal: hor),
         child: Container(
           // width: MediaQuery.of(context).size.width / 3,
-          height: MediaQuery.of(context).size.width / 3,
+          height: MediaQuery.of(context).size.width / 3 - 20,
 
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -33,10 +36,10 @@ class PadType2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Flexible(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
+        padding: EdgeInsets.symmetric(vertical: ver, horizontal: hor),
         child: Container(
           // width: MediaQuery.of(context).size.width / 3,
-          height: MediaQuery.of(context).size.width / 3,
+          height: MediaQuery.of(context).size.width / 3 - 20,
 
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -59,10 +62,10 @@ class PadType3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Flexible(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
+        padding: EdgeInsets.symmetric(vertical: ver, horizontal: hor),
         child: Container(
           // width: MediaQuery.of(context).size.width / 3,
-          height: MediaQuery.of(context).size.width / 3,
+          height: MediaQuery.of(context).size.width / 3 - 20,
 
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -85,10 +88,10 @@ class PadType4 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Flexible(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
+        padding: EdgeInsets.symmetric(vertical: ver, horizontal: hor),
         child: Container(
           // width: MediaQuery.of(context).size.width / 3,
-          height: MediaQuery.of(context).size.width / 3,
+          height: MediaQuery.of(context).size.width / 3 - 20,
 
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -111,10 +114,10 @@ class PadType5 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Flexible(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
+        padding: EdgeInsets.symmetric(vertical: ver, horizontal: hor),
         child: Container(
           // width: MediaQuery.of(context).size.width / 3,
-          height: MediaQuery.of(context).size.width / 3,
+          height: MediaQuery.of(context).size.width / 3 - 20,
 
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -137,17 +140,43 @@ class PadType6 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Flexible(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
+        padding: EdgeInsets.symmetric(vertical: ver, horizontal: hor),
         child: Container(
           // width: MediaQuery.of(context).size.width / 3,
-          height: MediaQuery.of(context).size.width / 3,
+          height: MediaQuery.of(context).size.width / 3 - 20,
 
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               gradient: const RadialGradient(
                 colors: [
-                  Color.fromARGB(255, 200, 244, 196),
-                  Color.fromARGB(255, 80, 240, 65),
+                  Color.fromARGB(255, 240, 199, 240),
+                  Color.fromARGB(255, 213, 0, 121),
+                ],
+              )),
+        ),
+      ),
+    );
+  }
+}
+
+class PadType7 extends StatelessWidget {
+  const PadType7({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: ver, horizontal: hor),
+        child: Container(
+          // width: MediaQuery.of(context).size.width / 3,
+          height: MediaQuery.of(context).size.width / 3 - 20,
+
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              gradient: const RadialGradient(
+                colors: [
+                  Color.fromARGB(255, 243, 206, 173),
+                  Color.fromARGB(255, 240, 144, 60),
                 ],
               )),
         ),

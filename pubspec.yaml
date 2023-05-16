@@ -43,6 +43,8 @@ dependencies:
   loading_indicator: ^3.1.0
   percent_indicator: ^4.2.3
   volume_controller: ^2.0.6
+  google_fonts: ^4.0.4
+  permission_handler:
 
 dev_dependencies:
   flutter_test:
