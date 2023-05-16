@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import, file_names
+
 import 'package:drums_pad/pages/upgradePlanPage.dart';
 import 'package:flutter/material.dart';
 import '../constants.dart';
@@ -51,9 +53,8 @@ class SideBar extends StatelessWidget {
                       ),
                     );
                   },
-                  child: const SizedBox(
-                    child: SideBarRow(Icons.diamond_outlined, 'Upgrade Plan'),
-                  ),
+                  child:
+                      const SideBarRow(Icons.diamond_outlined, 'Upgrade Plan'),
                 ),
                 Padding(
                   padding:

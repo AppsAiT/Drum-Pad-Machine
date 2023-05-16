@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field, prefer_final_fields, file_names
+
 import 'package:drums_pad/widgets/drumPad.dart';
 import 'package:flutter/material.dart';
 import 'package:volume_controller/volume_controller.dart';
@@ -166,8 +168,6 @@ class _DrumPadPageState extends State<DrumPadPage> {
                       SizedBox(
                         width: 140,
                         child: Slider.adaptive(
-                          min: 0,
-                          max: 100,
                           onChanged: (double value) {
                             setState(() {
                               _setVolumeValue = value;

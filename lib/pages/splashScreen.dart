@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, file_names
 
 import 'dart:async';
 
@@ -45,22 +45,32 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        child: Row(
+        child: Column(
           children: [
             const Spacer(),
             Image.asset(
               'Assets/splashLogo.png',
-              height: 60,
-              width: 60,
-            ),
-            Text(
-              'AppsAiT',
-              style: GoogleFonts.notoSans(
-                fontSize: 35,
-                color: Colors.cyan,
-              ),
+              height: 200,
+              width: 200,
             ),
             const Spacer(),
+            Text(
+              'Powered By',
+              style: TextStyle(
+                color: Colors.cyan.shade200,
+                fontSize: 16,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 70),
+              child: Text(
+                'AppsAiT',
+                style: GoogleFonts.notoSans(
+                  fontSize: 35,
+                  color: Colors.cyan.shade200,
+                ),
+              ),
+            ),
           ],
         ),
       ),

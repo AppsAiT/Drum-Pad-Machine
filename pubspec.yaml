@@ -45,6 +45,8 @@ dependencies:
   volume_controller: ^2.0.6
   google_fonts: ^4.0.4
   permission_handler:
+  just_audio: ^0.9.33
+  rxdart: ^0.27.7
 
 dev_dependencies:
   flutter_test:
@@ -71,7 +73,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - Assets/
-    - Assets/icons/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
