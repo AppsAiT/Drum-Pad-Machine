@@ -1,17 +1,19 @@
 // ignore_for_file: unused_field, prefer_final_fields, file_names
 
 import 'package:drums_pad/widgets/drumPad.dart';
+import 'package:drums_pad/widgets/flipButton.dart';
 import 'package:flutter/material.dart';
 import 'package:volume_controller/volume_controller.dart';
 
-class DrumPadPage extends StatefulWidget {
-  const DrumPadPage({super.key});
+class DrumPadPageA extends StatefulWidget {
+  const DrumPadPageA({super.key, required this.onFlip});
+  final VoidCallback? onFlip;
 
   @override
-  State<DrumPadPage> createState() => _DrumPadPageState();
+  State<DrumPadPageA> createState() => _DrumPadPageAState();
 }
 
-class _DrumPadPageState extends State<DrumPadPage> {
+class _DrumPadPageAState extends State<DrumPadPageA> {
   double _volumeListenerValue = 0;
   double _getVolume = 0;
   double _setVolumeValue = 0;
@@ -48,67 +50,9 @@ class _DrumPadPageState extends State<DrumPadPage> {
                 const SizedBox(height: 35),
                 Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 5),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            width: 35,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  height: 20,
-                                  width: 15,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(3),
-                                    color: Colors.white,
-                                  ),
-                                  child: const Center(
-                                    child: Text(
-                                      'A',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  height: 20,
-                                  width: 15,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(3),
-                                    color:
-                                        const Color.fromARGB(255, 98, 98, 98),
-                                  ),
-                                  child: const Center(
-                                    child: Text(
-                                      'B',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.all(5),
-                            child: Text(
-                              'Side',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                    FlipButton(
+                      onFlip: widget.onFlip,
+                      P: 'A',
                     ),
                     const Spacer(),
                     const Text(
@@ -202,7 +146,7 @@ class _DrumPadPageState extends State<DrumPadPage> {
           ),
           const Padding(
             padding: EdgeInsets.only(top: 25),
-            child: FullDrumPad(),
+            child: FullDrumPadA(),
           ),
         ],
       )),

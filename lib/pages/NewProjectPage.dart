@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
-import 'package:drums_pad/pages/drumpadPage.dart';
+import 'package:drums_pad/pages/drumPadFlip.dart';
+import 'package:drums_pad/pages/drumpadPageA.dart';
 import 'package:drums_pad/pages/myMusicPage.dart';
 import 'package:flutter/material.dart';
 
@@ -105,7 +106,7 @@ class _NewProjectPageState extends State<NewProjectPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const DrumPadPage(),
+                    builder: (context) => DrumPadFlip(),
                   ),
                 );
               },

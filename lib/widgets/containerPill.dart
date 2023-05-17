@@ -6,23 +6,29 @@ class HomePagePill extends StatelessWidget {
   var Index;
   HomePagePill({super.key, this.Index});
 
+  var Genres = [
+    'Assets/genres/HipHop.png',
+    'Assets/genres/House.png',
+    'Assets/genres/Rock.png',
+    'Assets/genres/HipHop.png',
+    'Assets/genres/Trap.png',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(3),
+      padding: const EdgeInsets.all(4),
       child: Container(
-        height: 38,
-        width: 110,
+        width: 180,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: const Color.fromARGB(255, 6, 114, 128),
+          border: Border.all(color: Colors.cyan, width: 1),
+          borderRadius: BorderRadius.circular(25),
+          image: DecorationImage(
+            image: AssetImage(Genres[Index]),
+            fit: BoxFit.cover,
+          ),
+          color: Colors.white,
         ),
-        child: Center(
-            child: Text(
-          'Genre $Index',
-          style: const TextStyle(
-              color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
-        )),
       ),
     );
   }
