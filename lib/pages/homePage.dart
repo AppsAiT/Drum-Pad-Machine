@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<QuerySnapshot<Map<String, dynamic>>> fetchDataFromFirebase() async {
-    return FirebaseFirestore.instance.collection('songs').get();
+    return FirebaseFirestore.instance.collection('DemoSongs').get();
   }
 
   List<IconData> listOfIcons = [
@@ -150,19 +150,32 @@ class _MyHomePageState extends State<MyHomePage> {
                             }
                             // Data is available, display it
                             final documents = snapshot.data!.docs;
+                            final trendingSongs = documents.where((song) {
+                              return song['trending'] == 'Yes';
+                            }).toList();
                             return Padding(
                               padding: const EdgeInsets.only(bottom: 15),
                               child: CarouselSlider.builder(
-                                itemCount: documents.length,
+                                itemCount: trendingSongs.length,
                                 itemBuilder: (BuildContext context,
                                     int itemIndex, int pageViewIndex) {
-                                  Map<String, dynamic> data =
-                                      documents[itemIndex].data();
-                                  return CaroselContainer(
-                                    title: data['title'],
-                                    subTitle: data['subtitle'],
-                                    imgeUrl: data['img'],
-                                  );
+                                  if (trendingSongs.isNotEmpty) {
+                                    Map<String, dynamic> data =
+                                        trendingSongs[itemIndex].data();
+                                    return CaroselContainer(
+                                      title: data['title'],
+                                      subTitle: data['subTitle'],
+                                      imgeUrl: data['imgUrl'],
+                                      premium: data['premium'],
+                                    );
+                                  } else {
+                                    return const Center(
+                                      child: Text(
+                                        'No data available',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    );
+                                  }
                                 },
                                 options: CarouselOptions(
                                   height: 200,
@@ -183,8 +196,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         Padding(
                           padding: const EdgeInsets.all(12),
                           child: Row(
-                            children: const [
-                              Padding(
+                            children: [
+                              const Padding(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 5),
                                 child: Text(
@@ -196,14 +209,17 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
                                 ),
                               ),
-                              Spacer(),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(
-                                  'View All',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
+                              const Spacer(),
+                              InkWell(
+                                onTap: () {},
+                                child: const Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  child: Text(
+                                    'View All',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -213,7 +229,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         SizedBox(
                           height: 180,
                           child: ListView.builder(
-                            itemCount: 5,
+                            itemCount: 4,
                             itemBuilder: (context, index) =>
                                 HomePagePill(Index: index),
                             scrollDirection: Axis.horizontal,
@@ -243,7 +259,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              // Display a loading indicator while waiting for data
                               return const Center(
                                   child: SizedBox(
                                 height: 90,
@@ -277,13 +292,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                 itemBuilder: (context, index) {
                                   Map<String, dynamic> data =
                                       documents[index].data();
-
                                   return Padding(
                                     padding: const EdgeInsets.all(6),
                                     child: HomePageContainer(
                                       title: data['title'],
-                                      subTitle: data['subtitle'],
-                                      imgeUrl: data['img'],
+                                      subTitle: data['subTitle'],
+                                      imgeUrl: data['imgUrl'],
+                                      premium: data['premium'],
                                     ),
                                   );
                                 },

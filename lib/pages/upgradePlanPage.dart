@@ -1,8 +1,10 @@
 // ignore_for_file: file_names
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drums_pad/constants.dart';
 import 'package:drums_pad/pages/homePage.dart';
 import 'package:drums_pad/widgets/planContainer.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class UpgradePlanPage extends StatefulWidget {
@@ -13,6 +15,38 @@ class UpgradePlanPage extends StatefulWidget {
 }
 
 class _UpgradePlanPageState extends State<UpgradePlanPage> {
+  late Map<String, dynamic> gold, diamond, platinum;
+
+  getdata() async {
+    await FirebaseFirestore.instance
+        .collection('membership')
+        .doc('Gold')
+        .get()
+        .then((value) {
+      gold = value.data()!;
+    });
+    await FirebaseFirestore.instance
+        .collection('membership')
+        .doc('Diamond')
+        .get()
+        .then((value) {
+      diamond = value.data()!;
+    });
+    await FirebaseFirestore.instance
+        .collection('membership')
+        .doc('Platinum')
+        .get()
+        .then((value) {
+      platinum = value.data()!;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,22 +161,22 @@ class _UpgradePlanPageState extends State<UpgradePlanPage> {
               children: [
                 PlanContainer(
                   PlanText: 'Gold',
-                  PlanPrice: '19.99',
-                  PlanIcon: 'Assets/icons/goldPlan.png',
+                  PlanPrice: gold['amount'],
+                  PlanIcon: gold['image'],
                   PlanDuration: 'Monthly',
                 ),
                 const Spacer(),
                 PlanContainer(
                   PlanText: 'Diamond',
-                  PlanPrice: '29.99',
-                  PlanIcon: 'Assets/icons/diamondPlan.png',
+                  PlanPrice: diamond['amount'],
+                  PlanIcon: diamond['image'],
                   PlanDuration: 'Monthly',
                 ),
                 const Spacer(),
                 PlanContainer(
                   PlanText: 'Platinum',
-                  PlanPrice: '59.99',
-                  PlanIcon: 'Assets/icons/platinumPlan.png',
+                  PlanPrice: platinum['amount'],
+                  PlanIcon: platinum['image'],
                   PlanDuration: 'Monthly',
                 ),
               ],

@@ -19,16 +19,15 @@ class _FullDrumPadAState extends State<FullDrumPadA> {
   late AudioPlayer audioPlayer4;
   final audioSource = LockCachingAudioSource(Uri.parse(
       'https://firebasestorage.googleapis.com/v0/b/drumpad-appsait.appspot.com/o/songs%2FBangalore%20Days%20Wedding%20Song%20%20Maangalyam%20%20Dulquer%20Salmaan%20%20Nivin%20Pauly%20%20Fahadh%20Faasil%20%20Nazriya.mp3?alt=media&token=de99dbaf-1292-4667-8dd7-bd4eadd5a80a'));
-
+  final audioSource2 = LockCachingAudioSource(Uri.parse(
+      'https://firebasestorage.googleapis.com/v0/b/drumpad-appsait.appspot.com/o/songs%2FSamp2.wav?alt=media&token=edabfe81-3613-4d7e-8229-1f14c5160c5c'));
   @override
   void initState() {
     super.initState();
     audioPlayer1 = AudioPlayer()..setAudioSource(audioSource);
-    audioPlayer1.setClip(
-        start: const Duration(seconds: 5), end: const Duration(seconds: 20));
-    audioPlayer2 = AudioPlayer()..setAsset('Assets/audio/sampleAudio.mp3');
-    audioPlayer3 = AudioPlayer()..setAsset('Assets/audio/sampleAudio.mp3');
-    audioPlayer4 = AudioPlayer()..setAsset('Assets/audio/sampleAudio.mp3');
+    audioPlayer2 = AudioPlayer()..setAudioSource(audioSource);
+    audioPlayer3 = AudioPlayer()..setAudioSource(audioSource2);
+    audioPlayer4 = AudioPlayer()..setAsset('Assets/audio/Samp2.wav');
   }
 
   @override
@@ -38,6 +37,19 @@ class _FullDrumPadAState extends State<FullDrumPadA> {
     audioPlayer3.dispose();
     audioPlayer4.dispose();
     super.dispose();
+  }
+
+  playButton(Player) {
+    Player.stop();
+    Player.seek(const Duration(seconds: 0));
+    Player.play();
+  }
+
+  stopAll() {
+    audioPlayer1.stop();
+    audioPlayer2.stop();
+    audioPlayer3.stop();
+    audioPlayer4.stop();
   }
 
   @override
@@ -50,21 +62,21 @@ class _FullDrumPadAState extends State<FullDrumPadA> {
             children: [
               GestureDetector(
                 onTap: () {
-                  audioPlayer1.play();
+                  playButton(audioPlayer1);
                   print('1');
                 },
                 child: const PadType4(),
               ),
               GestureDetector(
                 onTap: () {
-                  audioPlayer2.play();
+                  playButton(audioPlayer2);
                   print('2');
                 },
                 child: const PadType4(),
               ),
               GestureDetector(
                 onTap: () {
-                  audioPlayer3.play();
+                  playButton(audioPlayer3);
                   print('3');
                 },
                 child: const PadType4(),
@@ -87,7 +99,7 @@ class _FullDrumPadAState extends State<FullDrumPadA> {
               ),
               GestureDetector(
                 onTap: () {
-                  audioPlayer4.play();
+                  playButton(audioPlayer4);
                   print('6');
                 },
                 child: const PadType4(),
@@ -139,6 +151,12 @@ class _FullDrumPadAState extends State<FullDrumPadA> {
             ],
           ),
           MusicPlay(audioPlayer: audioPlayer1),
+          IconButton(
+            onPressed: () => stopAll(),
+            icon: const Icon(Icons.play_arrow_rounded),
+            iconSize: 33,
+            color: Colors.cyan,
+          ),
         ],
       ),
     );

@@ -30,17 +30,20 @@ class HomePageContainer extends StatelessWidget {
   final String title;
   final String subTitle;
   final String imgeUrl;
+  final bool premium;
 
-  const HomePageContainer(
-      {super.key,
-      required this.title,
-      required this.subTitle,
-      required this.imgeUrl});
+  const HomePageContainer({
+    super.key,
+    required this.title,
+    required this.subTitle,
+    required this.imgeUrl,
+    required this.premium,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 180,
+      height: 220,
       width: 200,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
@@ -112,7 +115,8 @@ class HomePageContainer extends StatelessWidget {
                             onTap: () {},
                             child: const CircleAvatar(
                               radius: 15,
-                              backgroundColor: Colors.black,
+                              backgroundColor:
+                                  Color.fromARGB(255, 38, 108, 117),
                               child: Icon(
                                 Icons.play_circle_fill_outlined,
                                 size: 30,
@@ -143,6 +147,22 @@ class HomePageContainer extends StatelessWidget {
               )
             ],
           ),
+          premium
+              ? Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  child: Container(
+                    height: 35,
+                    width: 35,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        image: const DecorationImage(
+                            image: AssetImage(
+                          'Assets/Premium.png',
+                        ))),
+                  ),
+                )
+              : Container(),
         ],
       ),
     );

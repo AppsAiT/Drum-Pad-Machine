@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/searchPage.dart';
-import 'carouselContainer.dart';
 import 'containerPill.dart';
 import 'containers.dart';
 import 'sideBar.dart';
@@ -48,12 +47,13 @@ class Home extends StatelessWidget {
                       itemCount: 10,
                       itemBuilder: (BuildContext context, int itemIndex,
                               int pageViewIndex) =>
-                          const CaroselContainer(
-                        title: 'Serpent King',
-                        subTitle: 'Serpent King',
-                        imgeUrl:
-                            'https://t3.ftcdn.net/jpg/04/79/81/76/360_F_479817672_BpTyGX9qAl3rs9mHqvQUsyWXTJrkLUII.jpg',
-                      ),
+                          Container(),
+                      //     const CaroselContainer(
+                      //   title: 'Serpent King',
+                      //   subTitle: 'Serpent King',
+                      //   imgeUrl:
+                      //       'https://t3.ftcdn.net/jpg/04/79/81/76/360_F_479817672_BpTyGX9qAl3rs9mHqvQUsyWXTJrkLUII.jpg',
+                      // ),
                       options: CarouselOptions(
                         height: 200,
                         enlargeCenterPage: true,
@@ -135,6 +135,7 @@ class Home extends StatelessWidget {
                         child: HomePageContainer(
                           title: 'title ${index + 1}',
                           subTitle: 'subTitle ${index + 1}',
+                          premium: index + 1 == " " ? true : false,
                           imgeUrl:
                               'https://t3.ftcdn.net/jpg/04/79/81/76/360_F_479817672_BpTyGX9qAl3rs9mHqvQUsyWXTJrkLUII.jpg',
                         ),

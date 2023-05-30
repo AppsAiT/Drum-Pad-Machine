@@ -10,7 +10,6 @@ class HomePagePill extends StatelessWidget {
     'Assets/genres/HipHop.png',
     'Assets/genres/House.png',
     'Assets/genres/Rock.png',
-    'Assets/genres/HipHop.png',
     'Assets/genres/Trap.png',
   ];
 

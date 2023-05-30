@@ -42,7 +42,7 @@ class PlanContainer extends StatelessWidget {
             child: SizedBox(
               height: 45,
               width: 45,
-              child: Image.asset(PlanIcon),
+              child: Image.network(PlanIcon),
             ),
           ),
           Text(
