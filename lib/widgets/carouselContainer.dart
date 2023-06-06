@@ -27,18 +27,18 @@ class CaroselContainer extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          Container(
+          SizedBox(
             height: 200,
             width: 220,
-            decoration: BoxDecoration(
+            child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-            ),
-            child: FadeInImage(
-              placeholder: const AssetImage('Assets/imageLoading.png'),
-              image: NetworkImage(imgeUrl),
-              fit: BoxFit.fill,
-              fadeInDuration: const Duration(milliseconds: 300),
-              fadeOutDuration: const Duration(milliseconds: 300),
+              child: FadeInImage(
+                placeholder: const AssetImage('Assets/imageLoading.png'),
+                image: NetworkImage(imgeUrl),
+                fit: BoxFit.fill,
+                fadeInDuration: const Duration(milliseconds: 300),
+                fadeOutDuration: const Duration(milliseconds: 300),
+              ),
             ),
           ),
           Column(
@@ -86,12 +86,12 @@ class CaroselContainer extends StatelessWidget {
                     Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(10),
+                          padding: const EdgeInsets.only(right: 2, left: 2),
                           child: InkWell(
                             onTap: () {},
                             child: const CircleAvatar(
                               radius: 15,
-                              backgroundColor: Colors.black,
+                              backgroundColor: Color.fromARGB(255, 6, 114, 128),
                               child: Icon(
                                 Icons.play_circle_fill_outlined,
                                 size: 30,
@@ -101,14 +101,14 @@ class CaroselContainer extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(right: 10),
+                          padding: const EdgeInsets.only(right: 5),
                           child: InkWell(
                             onTap: () {},
                             child: const CircleAvatar(
                               radius: 15,
-                              backgroundColor: Colors.black,
+                              backgroundColor: Color.fromARGB(255, 6, 114, 128),
                               child: Icon(
-                                Icons.download_for_offline_rounded,
+                                Icons.more_vert_rounded,
                                 color: Colors.white,
                                 size: 30,
                               ),

@@ -51,18 +51,18 @@ class HomePageContainer extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          Container(
+          SizedBox(
             height: 180,
             width: 200,
-            decoration: BoxDecoration(
+            child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-            ),
-            child: FadeInImage(
-              placeholder: const AssetImage('Assets/imageLoading.png'),
-              image: NetworkImage(imgeUrl),
-              fit: BoxFit.fill,
-              fadeInDuration: const Duration(milliseconds: 300),
-              fadeOutDuration: const Duration(milliseconds: 300),
+              child: FadeInImage(
+                placeholder: const AssetImage('Assets/imageLoading.png'),
+                image: NetworkImage(imgeUrl),
+                fit: BoxFit.fill,
+                fadeInDuration: const Duration(milliseconds: 300),
+                fadeOutDuration: const Duration(milliseconds: 300),
+              ),
             ),
           ),
           Column(
@@ -110,13 +110,12 @@ class HomePageContainer extends StatelessWidget {
                     Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(top: 5, right: 10),
+                          padding: const EdgeInsets.only(top: 5),
                           child: InkWell(
                             onTap: () {},
                             child: const CircleAvatar(
                               radius: 15,
-                              backgroundColor:
-                                  Color.fromARGB(255, 38, 108, 117),
+                              backgroundColor: Color.fromARGB(255, 6, 114, 128),
                               child: Icon(
                                 Icons.play_circle_fill_outlined,
                                 size: 30,
@@ -126,14 +125,14 @@ class HomePageContainer extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 5, right: 10),
+                          padding: const EdgeInsets.only(top: 5, right: 2),
                           child: InkWell(
                             onTap: () {},
                             child: const CircleAvatar(
                               radius: 15,
-                              backgroundColor: Colors.black,
+                              backgroundColor: Color.fromARGB(255, 6, 114, 128),
                               child: Icon(
-                                Icons.download_for_offline_rounded,
+                                Icons.more_vert_rounded,
                                 color: Colors.white,
                                 size: 30,
                               ),

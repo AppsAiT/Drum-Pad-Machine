@@ -1,16 +1,32 @@
 import 'package:flutter/material.dart';
 
-class FlipButton extends StatelessWidget {
-  const FlipButton({super.key, required this.onFlip, required this.P});
+class FlipButton extends StatefulWidget {
+  FlipButton({super.key, required this.onFlip, required this.P});
   final VoidCallback? onFlip;
-  final String P;
+  late String P;
+
+  @override
+  State<FlipButton> createState() => _FlipButtonState();
+}
+
+class _FlipButtonState extends State<FlipButton> {
+  filp() {
+    widget.onFlip!();
+    setState(() {
+      if (widget.P == 'A') {
+        widget.P = 'B';
+      } else {
+        widget.P = 'A';
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       child: InkWell(
-        onTap: onFlip,
+        onTap: filp,
         child: Column(
           children: [
             SizedBox(
@@ -23,7 +39,7 @@ class FlipButton extends StatelessWidget {
                     width: 15,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(3),
-                      color: P == 'A'
+                      color: widget.P == 'A'
                           ? Colors.white
                           : const Color.fromARGB(255, 98, 98, 98),
                     ),
@@ -43,7 +59,7 @@ class FlipButton extends StatelessWidget {
                     width: 15,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(3),
-                      color: P == 'A'
+                      color: widget.P == 'A'
                           ? const Color.fromARGB(255, 98, 98, 98)
                           : Colors.white,
                     ),

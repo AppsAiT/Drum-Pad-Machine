@@ -3,21 +3,70 @@
 import 'package:drums_pad/widgets/drumPad.dart';
 import 'package:drums_pad/widgets/flipButton.dart';
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:page_flip_builder/page_flip_builder.dart';
 import 'package:volume_controller/volume_controller.dart';
 
-class DrumPadPageA extends StatefulWidget {
-  const DrumPadPageA({super.key});
+class DemoDrumPage extends StatefulWidget {
+  const DemoDrumPage({super.key});
 
   @override
-  State<DrumPadPageA> createState() => _DrumPadPageAState();
+  State<DemoDrumPage> createState() => _DemoDrumPageState();
 }
 
-class _DrumPadPageAState extends State<DrumPadPageA> {
+class _DemoDrumPageState extends State<DemoDrumPage> {
   double _volumeListenerValue = 0;
   double _getVolume = 0;
   double _setVolumeValue = 0;
   final pageFlipKey = GlobalKey<PageFlipBuilderState>();
+  var currentPad = 'A';
+  var tempPlaying = false;
+
+  late AudioPlayer audioPlayerA1;
+  late AudioPlayer audioPlayerA2;
+  late AudioPlayer audioPlayerA3;
+  late AudioPlayer audioPlayerA4;
+  late AudioPlayer audioPlayerA5;
+  late AudioPlayer audioPlayerA6;
+  late AudioPlayer audioPlayerA7;
+  late AudioPlayer audioPlayerA8;
+  late AudioPlayer audioPlayerA9;
+  late AudioPlayer audioPlayerA10;
+  late AudioPlayer audioPlayerA11;
+  late AudioPlayer audioPlayerA12;
+
+  late AudioPlayer audioPlayerB1;
+  late AudioPlayer audioPlayerB2;
+  late AudioPlayer audioPlayerB3;
+  late AudioPlayer audioPlayerB4;
+  late AudioPlayer audioPlayerB5;
+  late AudioPlayer audioPlayerB6;
+  late AudioPlayer audioPlayerB7;
+  late AudioPlayer audioPlayerB8;
+  late AudioPlayer audioPlayerB9;
+  late AudioPlayer audioPlayerB10;
+  late AudioPlayer audioPlayerB11;
+  late AudioPlayer audioPlayerB12;
+
+  final audioSource = LockCachingAudioSource(Uri.parse(
+      'https://firebasestorage.googleapis.com/v0/b/drumpad-appsait.appspot.com/o/songs%2FBangalore%20Days%20Wedding%20Song%20%20Maangalyam%20%20Dulquer%20Salmaan%20%20Nivin%20Pauly%20%20Fahadh%20Faasil%20%20Nazriya.mp3?alt=media&token=de99dbaf-1292-4667-8dd7-bd4eadd5a80a'));
+  final audioSource2 = LockCachingAudioSource(Uri.parse(
+      'https://firebasestorage.googleapis.com/v0/b/drumpad-appsait.appspot.com/o/songs%2FSamp2.wav?alt=media&token=edabfe81-3613-4d7e-8229-1f14c5160c5c'));
+  final audioSource3 = LockCachingAudioSource(Uri.parse(
+      'https://firebasestorage.googleapis.com/v0/b/drumpad-appsait.appspot.com/o/DemoSong%2Ftunes%2Fsub-synth-electro-pluck-one-shot_F_major.wav?alt=media&token=3fc82031-873a-46ba-8821-2c566ccb8c0f'));
+
+  OnFlip() {
+    if (currentPad == 'A') {
+      setState(() {
+        currentPad = 'B';
+      });
+    } else {
+      setState(() {
+        currentPad = 'A';
+      });
+    }
+    pageFlipKey.currentState!.flip();
+  }
 
   @override
   void initState() {
@@ -26,13 +75,27 @@ class _DrumPadPageAState extends State<DrumPadPageA> {
     VolumeController().listener((volume) {
       setState(() => _volumeListenerValue = volume);
     });
-
     VolumeController().getVolume().then((volume) => _setVolumeValue = volume);
+    audioPlayerA1 = AudioPlayer()..setAudioSource(audioSource);
+    audioPlayerA2 = AudioPlayer()..setAudioSource(audioSource);
+    audioPlayerA3 = AudioPlayer()..setAudioSource(audioSource2);
+    audioPlayerA4 = AudioPlayer()..setAudioSource(audioSource2);
+    audioPlayerA10 = AudioPlayer()..setAudioSource(audioSource3);
+
+    audioPlayerB1 = AudioPlayer()..setAudioSource(audioSource);
+    audioPlayerB2 = AudioPlayer()..setAudioSource(audioSource);
+    audioPlayerB3 = AudioPlayer()..setAudioSource(audioSource2);
+    audioPlayerB4 = AudioPlayer()..setAudioSource(audioSource2);
+    audioPlayerB10 = AudioPlayer()..setAudioSource(audioSource3);
   }
 
   @override
   void dispose() {
     VolumeController().removeListener();
+    audioPlayerA1.dispose();
+    audioPlayerA2.dispose();
+    audioPlayerA3.dispose();
+    audioPlayerA4.dispose();
     super.dispose();
   }
 
@@ -52,8 +115,8 @@ class _DrumPadPageAState extends State<DrumPadPageA> {
                 Row(
                   children: [
                     FlipButton(
-                      onFlip: () => pageFlipKey.currentState!.flip(),
-                      P: 'A',
+                      onFlip: () => OnFlip(),
+                      P: currentPad,
                     ),
                     const Spacer(),
                     const Text(
@@ -145,12 +208,43 @@ class _DrumPadPageAState extends State<DrumPadPageA> {
               ),
             ),
           ),
+          // Center(
+          //   child: IconButton(
+          //     onPressed: () {
+          //       if (tempPlaying) {
+          //         audioPlayerA1.stop();
+          //         audioPlayerA1.seek(const Duration(seconds: 0));
+          //         tempPlaying = false;
+          //       } else {
+          //         audioPlayerA1.play();
+          //         tempPlaying = true;
+          //       }
+          //     },
+          //     icon: const Icon(
+          //       Icons.play_arrow_rounded,
+          //       color: Colors.amber,
+          //       size: 36,
+          //     ),
+          //   ),
+          // ),
           Padding(
-            padding: EdgeInsets.only(top: 25),
+            padding: const EdgeInsets.only(top: 25),
             child: PageFlipBuilder(
               key: pageFlipKey,
-              frontBuilder: (_) => const FullDrumPadA(),
-              backBuilder: (_) => const FullDrumPadB(),
+              frontBuilder: (_) => FullDrumPadA(
+                currentPage: currentPad,
+                audioPlayer1: audioPlayerA1,
+                audioPlayer2: audioPlayerA2,
+                audioPlayer3: audioPlayerA3,
+                audioPlayer4: audioPlayerA4,
+              ),
+              backBuilder: (_) => FullDrumPadB(
+                currentPage: currentPad,
+                audioPlayer1: audioPlayerB1,
+                audioPlayer2: audioPlayerB2,
+                audioPlayer3: audioPlayerB3,
+                audioPlayer4: audioPlayerB4,
+              ),
               flipAxis: Axis.horizontal,
               maxTilt: 0.003,
               maxScale: 0.2,
