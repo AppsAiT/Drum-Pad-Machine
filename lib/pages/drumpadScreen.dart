@@ -7,20 +7,24 @@ import 'package:just_audio/just_audio.dart';
 import 'package:page_flip_builder/page_flip_builder.dart';
 import 'package:volume_controller/volume_controller.dart';
 
-class DemoDrumPage extends StatefulWidget {
-  const DemoDrumPage({super.key});
+class DrumPadPage extends StatefulWidget {
+  const DrumPadPage({super.key});
 
   @override
-  State<DemoDrumPage> createState() => _DemoDrumPageState();
+  State<DrumPadPage> createState() => _DrumPadPageState();
 }
 
-class _DemoDrumPageState extends State<DemoDrumPage> {
+class _DrumPadPageState extends State<DrumPadPage> {
   double _volumeListenerValue = 0;
   double _getVolume = 0;
   double _setVolumeValue = 0;
   final pageFlipKey = GlobalKey<PageFlipBuilderState>();
   var currentPad = 'A';
   var tempPlaying = false;
+
+  Duration duration = Duration.zero;
+  int A = 0;
+  int B = 0;
 
   late AudioPlayer audioPlayerA1;
   late AudioPlayer audioPlayerA2;
@@ -68,6 +72,18 @@ class _DemoDrumPageState extends State<DemoDrumPage> {
     pageFlipKey.currentState!.flip();
   }
 
+  splitSong() async {
+    setState(() {
+      duration = audioPlayerA1.duration ?? Duration.zero;
+      A = ((duration.inSeconds) / 4).floor();
+    });
+
+    print('============> $duration');
+    print('============> $A');
+  }
+
+  init() {}
+
   @override
   void initState() {
     super.initState();
@@ -78,8 +94,8 @@ class _DemoDrumPageState extends State<DemoDrumPage> {
     VolumeController().getVolume().then((volume) => _setVolumeValue = volume);
     audioPlayerA1 = AudioPlayer()..setAudioSource(audioSource);
     audioPlayerA2 = AudioPlayer()..setAudioSource(audioSource);
-    audioPlayerA3 = AudioPlayer()..setAudioSource(audioSource2);
-    audioPlayerA4 = AudioPlayer()..setAudioSource(audioSource2);
+    audioPlayerA3 = AudioPlayer()..setAudioSource(audioSource);
+    audioPlayerA4 = AudioPlayer()..setAudioSource(audioSource);
     audioPlayerA10 = AudioPlayer()..setAudioSource(audioSource3);
 
     audioPlayerB1 = AudioPlayer()..setAudioSource(audioSource);
@@ -87,6 +103,8 @@ class _DemoDrumPageState extends State<DemoDrumPage> {
     audioPlayerB3 = AudioPlayer()..setAudioSource(audioSource2);
     audioPlayerB4 = AudioPlayer()..setAudioSource(audioSource2);
     audioPlayerB10 = AudioPlayer()..setAudioSource(audioSource3);
+
+    splitSong();
   }
 
   @override
@@ -237,6 +255,7 @@ class _DemoDrumPageState extends State<DemoDrumPage> {
                 audioPlayer2: audioPlayerA2,
                 audioPlayer3: audioPlayerA3,
                 audioPlayer4: audioPlayerA4,
+                duration: A,
               ),
               backBuilder: (_) => FullDrumPadB(
                 currentPage: currentPad,
@@ -244,6 +263,7 @@ class _DemoDrumPageState extends State<DemoDrumPage> {
                 audioPlayer2: audioPlayerB2,
                 audioPlayer3: audioPlayerB3,
                 audioPlayer4: audioPlayerB4,
+                duration: A,
               ),
               flipAxis: Axis.horizontal,
               maxTilt: 0.003,

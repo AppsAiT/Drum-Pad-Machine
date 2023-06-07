@@ -13,12 +13,14 @@ class FullDrumPadA extends StatefulWidget {
     required this.audioPlayer2,
     required this.audioPlayer3,
     required this.audioPlayer4,
+    required this.duration,
   });
   String currentPage;
   final AudioPlayer audioPlayer1;
   final AudioPlayer audioPlayer2;
   final AudioPlayer audioPlayer3;
   final AudioPlayer audioPlayer4;
+  final int duration;
 
   @override
   State<FullDrumPadA> createState() => _FullDrumPadAState();
@@ -43,9 +45,9 @@ class _FullDrumPadAState extends State<FullDrumPadA> {
     super.dispose();
   }
 
-  playButton(Player) {
+  playButton(Player, time) {
     Player.stop();
-    Player.seek(const Duration(seconds: 0));
+    Player.seek(Duration(seconds: time));
     Player.play();
   }
 
@@ -66,21 +68,24 @@ class _FullDrumPadAState extends State<FullDrumPadA> {
             children: [
               GestureDetector(
                 onTap: () {
-                  playButton(widget.audioPlayer1);
+                  widget.audioPlayer1.seek(const Duration(seconds: 0));
+                  playButton(widget.audioPlayer1, 0);
                   print('1');
                 },
                 child: const PadType4(),
               ),
               GestureDetector(
                 onTap: () {
-                  playButton(widget.audioPlayer2);
+                  widget.audioPlayer2.seek(Duration(seconds: widget.duration));
+                  playButton(widget.audioPlayer2, widget.duration);
                   print('2');
                 },
                 child: const PadType4(),
               ),
               GestureDetector(
                 onTap: () {
-                  playButton(widget.audioPlayer3);
+                  widget.audioPlayer3.seek(Duration(seconds: widget.duration));
+                  playButton(widget.audioPlayer3, widget.duration * 2);
                   print('3');
                 },
                 child: const PadType4(),
@@ -103,7 +108,9 @@ class _FullDrumPadAState extends State<FullDrumPadA> {
               ),
               GestureDetector(
                 onTap: () {
-                  playButton(widget.audioPlayer4);
+                  widget.audioPlayer4
+                      .seek(Duration(seconds: widget.duration * 3));
+                  playButton(widget.audioPlayer4, widget.duration * 3);
                   print('6');
                 },
                 child: const PadType4(),
@@ -175,12 +182,14 @@ class FullDrumPadB extends StatefulWidget {
     required this.audioPlayer2,
     required this.audioPlayer3,
     required this.audioPlayer4,
+    required this.duration,
   });
   String currentPage;
   final AudioPlayer audioPlayer1;
   final AudioPlayer audioPlayer2;
   final AudioPlayer audioPlayer3;
   final AudioPlayer audioPlayer4;
+  final int duration;
 
   @override
   State<FullDrumPadB> createState() => _FullDrumPadBState();
@@ -199,9 +208,9 @@ class _FullDrumPadBState extends State<FullDrumPadB> {
     super.dispose();
   }
 
-  playButton(Player) {
+  playButton(Player, time) {
     Player.stop();
-    Player.seek(const Duration(seconds: 0));
+    Player.seek(Duration(seconds: time));
     Player.play();
   }
 
@@ -215,21 +224,28 @@ class _FullDrumPadBState extends State<FullDrumPadB> {
             children: [
               GestureDetector(
                 onTap: () {
-                  playButton(widget.audioPlayer1);
+                  widget.audioPlayer1.seek(const Duration(seconds: 0));
+                  playButton(widget.audioPlayer1, 0);
                   print('1');
                 },
                 child: const PadType1(),
               ),
               GestureDetector(
                 onTap: () {
-                  playButton(widget.audioPlayer2);
+                  widget.audioPlayer2
+                      .seek(Duration(seconds: widget.duration as int));
+                  print('===========> ${widget.duration}');
+                  playButton(widget.audioPlayer2, widget.duration);
                   print('2');
                 },
                 child: const PadType1(),
               ),
               GestureDetector(
                 onTap: () {
-                  playButton(widget.audioPlayer3);
+                  widget.audioPlayer3
+                      .seek(Duration(seconds: widget.duration * 2 as int));
+                  print('===========> ${(widget.duration) * 2}');
+                  playButton(widget.audioPlayer3, widget.duration * 2);
                   print('3');
                 },
                 child: const PadType1(),
@@ -252,7 +268,10 @@ class _FullDrumPadBState extends State<FullDrumPadB> {
               ),
               GestureDetector(
                 onTap: () {
-                  playButton(widget.audioPlayer4);
+                  widget.audioPlayer4
+                      .seek(Duration(seconds: widget.duration * 3 as int));
+                  print('===========> ${widget.duration * 3}');
+                  playButton(widget.audioPlayer4, widget.duration * 3);
                   print('6');
                 },
                 child: const PadType1(),
