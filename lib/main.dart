@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:drums_pad/pages/loginPage.dart';
 import 'package:drums_pad/pages/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const SplashScreen(),
       // home: const DemoDrumPage(),
+      // home: LoginPage(pageKey: 1),
     );
   }
 }

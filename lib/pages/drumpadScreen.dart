@@ -76,13 +76,13 @@ class _DrumPadPageState extends State<DrumPadPage> {
     setState(() {
       duration = audioPlayerA1.duration ?? Duration.zero;
       A = ((duration.inSeconds) / 4).floor();
+      B = ((duration.inSeconds) / 4).floor();
     });
 
     print('============> $duration');
     print('============> $A');
+    print('============> $B');
   }
-
-  init() {}
 
   @override
   void initState() {
@@ -114,6 +114,12 @@ class _DrumPadPageState extends State<DrumPadPage> {
     audioPlayerA2.dispose();
     audioPlayerA3.dispose();
     audioPlayerA4.dispose();
+    audioPlayerA10.dispose();
+    audioPlayerB1.dispose();
+    audioPlayerB2.dispose();
+    audioPlayerB3.dispose();
+    audioPlayerB4.dispose();
+    audioPlayerB10.dispose();
     super.dispose();
   }
 
@@ -226,25 +232,6 @@ class _DrumPadPageState extends State<DrumPadPage> {
               ),
             ),
           ),
-          // Center(
-          //   child: IconButton(
-          //     onPressed: () {
-          //       if (tempPlaying) {
-          //         audioPlayerA1.stop();
-          //         audioPlayerA1.seek(const Duration(seconds: 0));
-          //         tempPlaying = false;
-          //       } else {
-          //         audioPlayerA1.play();
-          //         tempPlaying = true;
-          //       }
-          //     },
-          //     icon: const Icon(
-          //       Icons.play_arrow_rounded,
-          //       color: Colors.amber,
-          //       size: 36,
-          //     ),
-          //   ),
-          // ),
           Padding(
             padding: const EdgeInsets.only(top: 25),
             child: PageFlipBuilder(
@@ -263,7 +250,7 @@ class _DrumPadPageState extends State<DrumPadPage> {
                 audioPlayer2: audioPlayerB2,
                 audioPlayer3: audioPlayerB3,
                 audioPlayer4: audioPlayerB4,
-                duration: A,
+                duration: B,
               ),
               flipAxis: Axis.horizontal,
               maxTilt: 0.003,

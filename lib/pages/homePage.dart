@@ -2,6 +2,8 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:drums_pad/pages/loginCheck.dart';
+import 'package:drums_pad/pages/loginPage.dart';
 import 'package:drums_pad/pages/myMusicPage.dart';
 import 'package:drums_pad/pages/searchPage.dart';
 import 'package:drums_pad/pages/tutorialPage.dart';
@@ -75,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Widget> pages = [
     const Home(),
     const MyMusicPage(),
-    const TutorialPage(),
+    LoginPage(pageKey: 1),
   ];
 
   @override
@@ -83,7 +85,10 @@ class _MyHomePageState extends State<MyHomePage> {
     List<Widget> screens = [
       const Home(),
       const MyMusicPage(),
-      const TutorialPage(),
+      LoginCheckPage(
+        page: const TutorialPage(),
+      ),
+      // const TutorialPage(),
     ];
 
     double displayWidth = MediaQuery.of(context).size.width;

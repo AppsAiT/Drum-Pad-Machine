@@ -6,14 +6,18 @@ class PlanContainer extends StatelessWidget {
   String PlanText;
   String PlanPrice;
   String PlanDuration;
-  var PlanIcon;
+  String image;
+  int selection;
+  int pageIndex;
 
   PlanContainer({
     super.key,
     required this.PlanText,
     required this.PlanPrice,
     required this.PlanDuration,
-    required this.PlanIcon,
+    required this.image,
+    required this.selection,
+    required this.pageIndex,
   });
 
   @override
@@ -22,6 +26,9 @@ class PlanContainer extends StatelessWidget {
       height: 135,
       width: 110,
       decoration: BoxDecoration(
+        border: selection == pageIndex
+            ? Border.all(width: 3, color: Colors.cyan)
+            : null,
         borderRadius: BorderRadius.circular(10),
         color: const Color.fromARGB(255, 41, 40, 51),
       ),
@@ -42,7 +49,7 @@ class PlanContainer extends StatelessWidget {
             child: SizedBox(
               height: 45,
               width: 45,
-              child: Image.network(PlanIcon),
+              child: Image.asset('Assets/icons/$image'),
             ),
           ),
           Text(
