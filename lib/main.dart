@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:drums_pad/pages/loginPage.dart';
 import 'package:drums_pad/pages/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';

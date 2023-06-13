@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:drums_pad/services/auth.dart';
 import 'package:drums_pad/widgets/tutorialTiles.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,10 @@ import 'homePage.dart';
 
 class TutorialPage extends StatelessWidget {
   const TutorialPage({super.key});
+
+  Future<void> signOut() async {
+    await Auth().signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +55,16 @@ class TutorialPage extends StatelessWidget {
                           ),
                         ),
                         const Spacer(),
-                        const Icon(
-                          Icons.arrow_circle_left_outlined,
-                          color: Color.fromARGB(255, 32, 31, 43),
-                          size: 33,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: InkWell(
+                            onTap: signOut,
+                            child: const Icon(
+                              Icons.logout_outlined,
+                              color: Colors.cyan,
+                              size: 33,
+                            ),
+                          ),
                         ),
                       ],
                     ),
