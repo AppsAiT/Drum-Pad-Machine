@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:drums_pad/pages/profilePage.dart';
 import 'package:drums_pad/services/auth.dart';
 import 'package:drums_pad/widgets/tutorialTiles.dart';
 import 'package:flutter/material.dart';
@@ -58,9 +59,16 @@ class TutorialPage extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           child: InkWell(
-                            onTap: signOut,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ProfilePage(),
+                                ),
+                              );
+                            },
                             child: const Icon(
-                              Icons.logout_outlined,
+                              Icons.person_rounded,
                               color: Colors.cyan,
                               size: 33,
                             ),

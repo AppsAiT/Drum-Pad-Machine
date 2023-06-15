@@ -7,6 +7,7 @@ import 'package:drums_pad/pages/loginPage.dart';
 import 'package:drums_pad/pages/myMusicPage.dart';
 import 'package:drums_pad/pages/searchPage.dart';
 import 'package:drums_pad/pages/tutorialPage.dart';
+import 'package:drums_pad/services/auth.dart';
 import 'package:drums_pad/widgets/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

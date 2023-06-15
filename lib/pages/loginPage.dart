@@ -90,6 +90,7 @@ class _LoginPageState extends State<LoginPage> {
             'name': nameController.text,
             'email': emailController.text,
             'phone': phoneController.text,
+            'premium': false,
           });
         }
       } else {
@@ -112,6 +113,17 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> googleSignIn() async {
     try {
       await Auth().signInWithGoogle();
+      User? user = Auth().currentUser;
+      if (user != null) {
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+          'name': user.displayName,
+          'email': user.email,
+          'phone': user.phoneNumber,
+          'photo': user.photoURL,
+          'premium': false,
+        });
+        sendVerification();
+      }
     } on FirebaseAuthException catch (error) {
       setState(() {
         _errorMessage = error.message!;
