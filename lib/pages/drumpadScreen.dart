@@ -75,8 +75,8 @@ class _DrumPadPageState extends State<DrumPadPage> {
   splitSong() async {
     setState(() {
       duration = audioPlayerA1.duration ?? Duration.zero;
-      A = ((duration.inSeconds) / 4).floor();
-      B = ((duration.inSeconds) / 4).floor();
+      A = ((57) / 4).floor();
+      B = ((57) / 4).floor();
     });
 
     print('============> $duration');

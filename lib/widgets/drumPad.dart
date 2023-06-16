@@ -1,5 +1,7 @@
 // ignore_for_file: file_names, avoid_print
 
+import 'dart:async';
+
 import 'package:drums_pad/widgets/singlePad.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
@@ -49,6 +51,9 @@ class _FullDrumPadAState extends State<FullDrumPadA> {
     Player.stop();
     Player.seek(Duration(seconds: time));
     Player.play();
+    Timer(Duration(seconds: time + widget.duration), () {
+      Player.stop();
+    });
   }
 
   stopAll() {
@@ -76,7 +81,7 @@ class _FullDrumPadAState extends State<FullDrumPadA> {
               ),
               GestureDetector(
                 onTap: () {
-                  widget.audioPlayer2.seek(Duration(seconds: widget.duration));
+                  // widget.audioPlayer2.seek(Duration(seconds: widget.duration));
                   playButton(widget.audioPlayer2, widget.duration);
                   print('2');
                 },
@@ -84,7 +89,7 @@ class _FullDrumPadAState extends State<FullDrumPadA> {
               ),
               GestureDetector(
                 onTap: () {
-                  widget.audioPlayer3.seek(Duration(seconds: widget.duration));
+                  // widget.audioPlayer3.seek(Duration(seconds: widget.duration));
                   playButton(widget.audioPlayer3, widget.duration * 2);
                   print('3');
                 },
