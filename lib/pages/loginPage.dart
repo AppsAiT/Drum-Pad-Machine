@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:drums_pad/pages/forgotPassword.dart';
 import 'package:drums_pad/pages/homePage.dart';
 import 'package:drums_pad/services/auth.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import '../constants.dart';
 
 class LoginPage extends StatefulWidget {
@@ -24,8 +26,16 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   late int page = 1;
-
   String _errorMessage = '';
+  static const List<Color> _kDefaultRainbowColors = [
+    Colors.red,
+    Colors.orange,
+    Colors.yellow,
+    Colors.green,
+    Colors.blue,
+    Colors.indigo,
+    Colors.purple,
+  ];
 
   @override
   void initState() {
@@ -50,6 +60,23 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> signInWithEmailAndPassword() async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: SizedBox(
+            height: 90,
+            width: 90,
+            child: LoadingIndicator(
+              indicatorType: Indicator.lineScalePulseOutRapid,
+              colors: _kDefaultRainbowColors,
+              strokeWidth: 4.0,
+              pathBackgroundColor: Colors.transparent,
+            ),
+          ),
+        );
+      },
+    );
     try {
       await Auth().signInWithEmailAndPassword(
         email: emailController.text,
@@ -60,6 +87,7 @@ class _LoginPageState extends State<LoginPage> {
         _errorMessage = error.message!;
       });
     }
+    Navigator.of(context).pop();
   }
 
   void sendVerification() async {
@@ -75,6 +103,23 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> createUserWithEmailAndPassword() async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: SizedBox(
+            height: 90,
+            width: 90,
+            child: LoadingIndicator(
+              indicatorType: Indicator.lineScalePulseOutRapid,
+              colors: _kDefaultRainbowColors,
+              strokeWidth: 4.0,
+              pathBackgroundColor: Colors.transparent,
+            ),
+          ),
+        );
+      },
+    );
     try {
       if (_errorMessage == '') {
         await Auth().createUserWithEmailAndPassword(
@@ -93,10 +138,6 @@ class _LoginPageState extends State<LoginPage> {
             'premium': false,
           });
         }
-      } else {
-        setState(() {
-          _errorMessage = 'User not created !';
-        });
       }
     } on FirebaseAuthException catch (error) {
       setState(() {
@@ -108,6 +149,8 @@ class _LoginPageState extends State<LoginPage> {
     if (user != null) {
       sendVerification();
     }
+
+    Navigator.of(context).pop();
   }
 
   Future<void> googleSignIn() async {
@@ -308,14 +351,42 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        _errorMessage,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(color: Colors.red),
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 39, top: 5),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ForgotPasswordScreen(),
+                                ),
+                              );
+                            },
+                            child: const Text(
+                              'forgot password',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 195, 209, 210),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
+                    if (_errorMessage == '')
+                      Container(height: 11)
+                    else
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Text(
+                          _errorMessage,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      ),
                     InkWell(
                       onTap: signInWithEmailAndPassword,
                       child: Container(
@@ -578,14 +649,17 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        _errorMessage,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(color: Colors.red),
+                    if (_errorMessage == '')
+                      Container(height: 11)
+                    else
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          _errorMessage,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(color: Colors.red),
+                        ),
                       ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.all(15),
                       child: InkWell(

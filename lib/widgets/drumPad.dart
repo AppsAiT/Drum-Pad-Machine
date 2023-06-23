@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:drums_pad/widgets/singlePad.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../services/musicPlay.dart';
 
 class FullDrumPadA extends StatefulWidget {
@@ -51,7 +52,7 @@ class _FullDrumPadAState extends State<FullDrumPadA> {
     Player.stop();
     Player.seek(Duration(seconds: time));
     Player.play();
-    Timer(Duration(seconds: time + widget.duration), () {
+    Timer(Duration(seconds: widget.duration), () {
       Player.stop();
     });
   }
@@ -71,7 +72,7 @@ class _FullDrumPadAState extends State<FullDrumPadA> {
         children: [
           Row(
             children: [
-              GestureDetector(
+              ZoomTapAnimation(
                 onTap: () {
                   widget.audioPlayer1.seek(const Duration(seconds: 0));
                   playButton(widget.audioPlayer1, 0);
@@ -79,7 +80,7 @@ class _FullDrumPadAState extends State<FullDrumPadA> {
                 },
                 child: const PadType4(),
               ),
-              GestureDetector(
+              ZoomTapAnimation(
                 onTap: () {
                   // widget.audioPlayer2.seek(Duration(seconds: widget.duration));
                   playButton(widget.audioPlayer2, widget.duration);
@@ -87,7 +88,7 @@ class _FullDrumPadAState extends State<FullDrumPadA> {
                 },
                 child: const PadType4(),
               ),
-              GestureDetector(
+              ZoomTapAnimation(
                 onTap: () {
                   // widget.audioPlayer3.seek(Duration(seconds: widget.duration));
                   playButton(widget.audioPlayer3, widget.duration * 2);
@@ -99,19 +100,19 @@ class _FullDrumPadAState extends State<FullDrumPadA> {
           ),
           Row(
             children: [
-              GestureDetector(
+              ZoomTapAnimation(
                 onTap: () {
                   print('4');
                 },
                 child: const PadType6(),
               ),
-              GestureDetector(
+              ZoomTapAnimation(
                 onTap: () {
                   print('5');
                 },
                 child: const PadType7(),
               ),
-              GestureDetector(
+              ZoomTapAnimation(
                 onTap: () {
                   widget.audioPlayer4
                       .seek(Duration(seconds: widget.duration * 3));
@@ -124,19 +125,19 @@ class _FullDrumPadAState extends State<FullDrumPadA> {
           ),
           Row(
             children: [
-              GestureDetector(
+              ZoomTapAnimation(
                 onTap: () {
                   print('7');
                 },
                 child: const PadType6(),
               ),
-              GestureDetector(
+              ZoomTapAnimation(
                 onTap: () {
                   print('8');
                 },
                 child: const PadType6(),
               ),
-              GestureDetector(
+              ZoomTapAnimation(
                 onTap: () {
                   print('9');
                 },
@@ -146,19 +147,19 @@ class _FullDrumPadAState extends State<FullDrumPadA> {
           ),
           Row(
             children: [
-              GestureDetector(
+              ZoomTapAnimation(
                 onTap: () {
                   print('10');
                 },
                 child: const PadType5(),
               ),
-              GestureDetector(
+              ZoomTapAnimation(
                 onTap: () {
                   print('11');
                 },
                 child: const PadType1(),
               ),
-              GestureDetector(
+              ZoomTapAnimation(
                 onTap: () {
                   print('12');
                 },
@@ -217,6 +218,9 @@ class _FullDrumPadBState extends State<FullDrumPadB> {
     Player.stop();
     Player.seek(Duration(seconds: time));
     Player.play();
+    Timer(Duration(seconds: widget.duration), () {
+      Player.stop();
+    });
   }
 
   @override
@@ -229,7 +233,7 @@ class _FullDrumPadBState extends State<FullDrumPadB> {
             children: [
               GestureDetector(
                 onTap: () {
-                  widget.audioPlayer1.seek(const Duration(seconds: 0));
+                  // widget.audioPlayer1.seek(const Duration(seconds: 0));
                   playButton(widget.audioPlayer1, 0);
                   print('1');
                 },
@@ -237,9 +241,9 @@ class _FullDrumPadBState extends State<FullDrumPadB> {
               ),
               GestureDetector(
                 onTap: () {
-                  widget.audioPlayer2
-                      .seek(Duration(seconds: widget.duration as int));
-                  print('===========> ${widget.duration}');
+                  // widget.audioPlayer2
+                  //     .seek(Duration(seconds: widget.duration as int));
+                  // print('===========> ${widget.duration}');
                   playButton(widget.audioPlayer2, widget.duration);
                   print('2');
                 },
@@ -247,9 +251,9 @@ class _FullDrumPadBState extends State<FullDrumPadB> {
               ),
               GestureDetector(
                 onTap: () {
-                  widget.audioPlayer3
-                      .seek(Duration(seconds: widget.duration * 2 as int));
-                  print('===========> ${(widget.duration) * 2}');
+                  // widget.audioPlayer3
+                  //     .seek(Duration(seconds: widget.duration * 2 as int));
+                  // print('===========> ${(widget.duration) * 2}');
                   playButton(widget.audioPlayer3, widget.duration * 2);
                   print('3');
                 },
@@ -273,9 +277,9 @@ class _FullDrumPadBState extends State<FullDrumPadB> {
               ),
               GestureDetector(
                 onTap: () {
-                  widget.audioPlayer4
-                      .seek(Duration(seconds: widget.duration * 3 as int));
-                  print('===========> ${widget.duration * 3}');
+                  // widget.audioPlayer4
+                  //     .seek(Duration(seconds: widget.duration * 3 as int));
+                  // print('===========> ${widget.duration * 3}');
                   playButton(widget.audioPlayer4, widget.duration * 3);
                   print('6');
                 },

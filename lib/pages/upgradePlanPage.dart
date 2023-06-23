@@ -2,7 +2,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drums_pad/constants.dart';
-import 'package:drums_pad/pages/PaymentPage.dart';
 import 'package:drums_pad/pages/homePage.dart';
 import 'package:drums_pad/services/auth.dart';
 import 'package:drums_pad/widgets/planContainer.dart';
@@ -28,6 +27,7 @@ class _UpgradePlanPageState extends State<UpgradePlanPage> {
   String? description;
   User? user;
   bool isPremium = false;
+  List duration = [30, 180, 360];
 
   static const List<Color> _kDefaultRainbowColors = [
     Colors.red,
@@ -87,9 +87,18 @@ class _UpgradePlanPageState extends State<UpgradePlanPage> {
     super.initState();
   }
 
+  Update() async {
+    print('===============> done');
+    await FirebaseFirestore.instance.collection('users').doc(user?.uid).update({
+      'expiry': DateTime.now().add(Duration(days: duration[selectedPlan - 1])),
+      'premium': true,
+    });
+  }
+
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     print(
         'Payment Success : ${response.paymentId}, ${response.orderId}, ${response.signature}');
+    Update();
 
     // Show success dialog box
     showDialog(
@@ -109,6 +118,10 @@ class _UpgradePlanPageState extends State<UpgradePlanPage> {
         );
       },
     );
+    setState(() {
+      isPremium = true;
+      loadingstatus = 'done';
+    });
 
     _razorpay.clear();
   }
@@ -412,13 +425,11 @@ class _UpgradePlanPageState extends State<UpgradePlanPage> {
                                     title: const Text('Select any Plan'),
                                     actions: [
                                       TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: const Text(
-                                            'OK',
-                                            style: TextStyle(),
-                                          ))
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('OK'),
+                                      ),
                                     ],
                                   );
                                 },

@@ -21,14 +21,42 @@ class SideBar extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 100, bottom: 40),
-              child: Container(
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('Assets/LOGO.png'),
+              child: Column(
+                children: [
+                  Container(
+                    height: 150,
+                    width: 150,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: AssetImage('Assets/logo.png'),
+                      ),
+                    ),
                   ),
-                ),
-                height: 150,
-                width: 150,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: const [
+                      Text(
+                        'MUSIC',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.cyan,
+                        ),
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        'MAKER',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w300,
+                          color: Colors.cyan,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
             Column(
@@ -36,7 +64,6 @@ class SideBar extends StatelessWidget {
                 const SideBarRow(Icons.support_agent_rounded, 'Support'),
                 const SideBarRow(Icons.language, 'Language'),
                 const SideBarRow(Icons.info_outline_rounded, 'About'),
-                const SideBarRow(Icons.settings_sharp, 'Settings'),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 25),
                   child: Container(
@@ -60,6 +87,7 @@ class SideBar extends StatelessWidget {
                   child:
                       const SideBarRow(Icons.diamond_outlined, 'Upgrade Plan'),
                 ),
+                const SizedBox(height: 100),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
@@ -68,16 +96,15 @@ class SideBar extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(10),
                         child: Container(
-                            height: 35,
-                            width: 35,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.white,
-                            ),
-                            child: const Icon(
-                              Icons.facebook,
-                              size: 25,
-                            )),
+                          height: 35,
+                          width: 35,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Image(
+                            image: AssetImage('Assets/facebook.png'),
+                          ),
+                        ),
                       ),
                       const Spacer(),
                       Padding(
@@ -87,7 +114,23 @@ class SideBar extends StatelessWidget {
                           width: 35,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
-                            color: Colors.white,
+                          ),
+                          child: const Image(
+                            image: AssetImage('Assets/instagram.png'),
+                          ),
+                        ),
+                      ),
+                      const Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Container(
+                          height: 35,
+                          width: 35,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Image(
+                            image: AssetImage('Assets/linkedin.png'),
                           ),
                         ),
                       ),
@@ -101,17 +144,8 @@ class SideBar extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                             color: Colors.white,
                           ),
-                        ),
-                      ),
-                      const Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Container(
-                          height: 35,
-                          width: 35,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: Colors.white,
+                          child: const Image(
+                            image: AssetImage('Assets/website.png'),
                           ),
                         ),
                       )

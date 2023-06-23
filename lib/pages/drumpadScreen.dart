@@ -100,8 +100,8 @@ class _DrumPadPageState extends State<DrumPadPage> {
 
     audioPlayerB1 = AudioPlayer()..setAudioSource(audioSource);
     audioPlayerB2 = AudioPlayer()..setAudioSource(audioSource);
-    audioPlayerB3 = AudioPlayer()..setAudioSource(audioSource2);
-    audioPlayerB4 = AudioPlayer()..setAudioSource(audioSource2);
+    audioPlayerB3 = AudioPlayer()..setAudioSource(audioSource);
+    audioPlayerB4 = AudioPlayer()..setAudioSource(audioSource);
     audioPlayerB10 = AudioPlayer()..setAudioSource(audioSource3);
 
     splitSong();

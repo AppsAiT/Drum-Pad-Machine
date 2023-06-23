@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:drums_pad/constants.dart';
 import 'package:drums_pad/pages/homePage.dart';
 import 'package:drums_pad/pages/permissionPage.dart';
+import 'package:drums_pad/pages/splashScreen2.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -21,22 +22,13 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    Timer(const Duration(seconds: 3), () async {
-      if (await Permission.storage.status.isGranted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MyHomePage(title: APP_NAME),
-          ),
-        );
-      } else {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const PermissionPage(),
-          ),
-        );
-      }
+    Timer(const Duration(seconds: 2), () async {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const SplashScreen2(),
+        ),
+      );
     });
   }
 

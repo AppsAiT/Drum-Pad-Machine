@@ -42,6 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     requestPermission();
+    checkSubscription();
     super.initState();
   }
 
@@ -59,6 +60,34 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<QuerySnapshot<Map<String, dynamic>>> fetchDataFromFirebase() async {
     return FirebaseFirestore.instance.collection('DemoSongs').get();
+  }
+
+  checkSubscription() async {
+    var user = Auth().currentUser;
+    if (user != null) {
+      try {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .get()
+            .then((value) {
+          if (value.data()!['premium'] == true) {
+            var date = value.data()!['expiry'].toDate().toUtc();
+            if (!DateTime.now().toUtc().isBefore(date)) {
+              FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(user.uid)
+                  .update({
+                'expiry': DateTime.now(),
+                'premium': false,
+              });
+            }
+          }
+        });
+      } catch (e) {
+        print('==================> $e');
+      }
+    }
   }
 
   List<IconData> listOfIcons = [
