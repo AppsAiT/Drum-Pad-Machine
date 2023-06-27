@@ -11,7 +11,10 @@ import 'package:drums_pad/services/auth.dart';
 import 'package:drums_pad/widgets/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:rxdart/rxdart.dart';
 import '../widgets/carouselContainer.dart';
 import '../widgets/containerPill.dart';
 import '../widgets/containers.dart';
@@ -39,11 +42,86 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late AudioPlayer homeAudioPlayer;
+  late final RewardedAd rewardedAd;
+  final String adUnitId = "ca-app-pub-3940256099942544/5224354917";
+  BannerAd? _bannerAd;
+  bool _bannerIsLoaded = false;
+
   @override
   void initState() {
     requestPermission();
     checkSubscription();
+    _loadRewardedAd();
+    _createBannerAdd();
+    homeAudioPlayer = AudioPlayer();
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    homeAudioPlayer.dispose();
+    super.dispose();
+  }
+
+  void _createBannerAdd() {
+    print('=====================================================');
+    setState(() {
+      _bannerAd = BannerAd(
+        size: AdSize.fullBanner,
+        adUnitId: 'ca-app-pub-9046870668611822/5049886088',
+        request: const AdRequest(),
+        listener: BannerAdListener(
+          onAdLoaded: (ad) => print('Ad Loaded'),
+          onAdFailedToLoad: (ad, error) {
+            ad.dispose();
+            print('Ad Failed to Load : $error');
+          },
+          onAdOpened: (ad) => print('Ad Opened'),
+          onAdClosed: (ad) => print('Ad Closed'),
+        ),
+      )..load();
+
+      _bannerIsLoaded = true;
+    });
+  }
+
+  void _loadRewardedAd() {
+    RewardedAd.load(
+        adUnitId: adUnitId,
+        request: const AdRequest(),
+        rewardedAdLoadCallback:
+            RewardedAdLoadCallback(onAdLoaded: (RewardedAd ad) {
+          print('$ad loaded');
+          rewardedAd = ad;
+          _setFullScreenContentCallBack();
+        }, onAdFailedToLoad: (LoadAdError error) {
+          print('Error : $error');
+        }));
+  }
+
+  void _setFullScreenContentCallBack() {
+    if (rewardedAd == null) return;
+    rewardedAd.fullScreenContentCallback = FullScreenContentCallback(
+      onAdShowedFullScreenContent: (RewardedAd ad) =>
+          print('$ad onAdShowedFullScreenContent'),
+      onAdDismissedFullScreenContent: (RewardedAd ad) {
+        print('$ad onAdDismissedFullScreenContent');
+        ad.dispose();
+      },
+      onAdFailedToShowFullScreenContent: (ad, error) {
+        print('$ad onAdFailedToShowedFullScreenContent Error : $error');
+        ad.dispose();
+      },
+      onAdImpression: (RewardedAd ad) => print('$ad ImpressionOccured'),
+    );
+  }
+
+  void _showAd() {
+    rewardedAd.show(onUserEarnedReward: (ad, rewardItem) {
+      num amount = rewardItem.amount;
+    });
   }
 
   void requestPermission() async {
@@ -124,7 +202,7 @@ class _MyHomePageState extends State<MyHomePage> {
     double displayWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      drawer: const SideBar(),
+      drawer: SideBar(bannerAd: _bannerAd, loaded: _bannerIsLoaded),
       body: currentIndex == 0
           ? Stack(
               children: [
@@ -189,40 +267,50 @@ class _MyHomePageState extends State<MyHomePage> {
                               return song['trending'] == 'Yes';
                             }).toList();
                             return Padding(
-                              padding: const EdgeInsets.only(bottom: 15),
-                              child: CarouselSlider.builder(
-                                itemCount: trendingSongs.length,
-                                itemBuilder: (BuildContext context,
-                                    int itemIndex, int pageViewIndex) {
-                                  if (trendingSongs.isNotEmpty) {
-                                    Map<String, dynamic> data =
-                                        trendingSongs[itemIndex].data();
-                                    return CaroselContainer(
-                                      title: data['title'],
-                                      subTitle: data['subTitle'],
-                                      imgeUrl: data['imgUrl'],
-                                      premium: data['premium'],
-                                    );
-                                  } else {
-                                    return const Center(
-                                      child: Text(
-                                        'No data available',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    );
-                                  }
-                                },
-                                options: CarouselOptions(
-                                  height: 200,
-                                  enlargeCenterPage: true,
-                                  autoPlay: true,
-                                  aspectRatio: 16 / 9,
-                                  autoPlayCurve: Curves.fastOutSlowIn,
-                                  enableInfiniteScroll: true,
-                                  autoPlayAnimationDuration:
-                                      const Duration(seconds: 3),
-                                  viewportFraction: 0.58,
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: SizedBox(
+                                height: 190,
+                                width: MediaQuery.of(context).size.width,
+                                child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
+                                  itemCount: trendingSongs.length,
+                                  itemBuilder:
+                                      (BuildContext context, int itemIndex) {
+                                    if (trendingSongs.isNotEmpty) {
+                                      Map<String, dynamic> data =
+                                          trendingSongs[itemIndex].data();
+                                      return Padding(
+                                        padding: const EdgeInsets.all(5),
+                                        child: CaroselContainer(
+                                          title: data['title'],
+                                          subTitle: data['subTitle'],
+                                          imgeUrl: data['imgUrl'],
+                                          premium: data['premium'],
+                                          song: data['songUrl'],
+                                          audioPlayer: homeAudioPlayer,
+                                        ),
+                                      );
+                                    } else {
+                                      return const Center(
+                                        child: Text(
+                                          'No data available',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  // options: CarouselOptions(
+                                  //   height: 200,
+                                  //   enlargeCenterPage: false,
+                                  //   // autoPlay: true,
+                                  //   aspectRatio: 16 / 9,
+                                  //   autoPlayCurve: Curves.fastOutSlowIn,
+                                  //   enableInfiniteScroll: false,
+                                  //   // autoPlayAnimationDuration:
+                                  //   //     const Duration(seconds: 3),
+                                  //   viewportFraction: 0.60,
+                                  //   scrollDirection: Axis.horizontal,
+                                  // ),
                                 ),
                               ),
                             );

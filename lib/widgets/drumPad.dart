@@ -167,7 +167,6 @@ class _FullDrumPadAState extends State<FullDrumPadA> {
               ),
             ],
           ),
-          MusicPlay(audioPlayer: widget.audioPlayer1),
           IconButton(
             onPressed: () => stopAll(),
             icon: const Icon(Icons.play_arrow_rounded),
@@ -331,7 +330,6 @@ class _FullDrumPadBState extends State<FullDrumPadB> {
               ),
             ],
           ),
-          MusicPlay(audioPlayer: widget.audioPlayer1),
         ],
       ),
     );

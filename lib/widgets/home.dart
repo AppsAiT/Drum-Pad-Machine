@@ -12,7 +12,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const SideBar(),
+      // drawer: SideBar(bannerAd: ),
       body: Stack(
         children: [
           SingleChildScrollView(

@@ -3,12 +3,15 @@
 import 'package:drums_pad/pages/loginCheck.dart';
 import 'package:drums_pad/pages/upgradePlanPage.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../constants.dart';
 import '../pages/homePage.dart';
 import 'sideBar_row.dart';
 
 class SideBar extends StatelessWidget {
-  const SideBar({super.key});
+  SideBar({super.key, this.bannerAd, required this.loaded});
+  BannerAd? bannerAd;
+  bool loaded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +90,13 @@ class SideBar extends StatelessWidget {
                   child:
                       const SideBarRow(Icons.diamond_outlined, 'Upgrade Plan'),
                 ),
-                const SizedBox(height: 100),
+                const SizedBox(height: 50),
+                (bannerAd == null && loaded == false)
+                    ? Container()
+                    : Container(
+                        height: 40,
+                        child: AdWidget(ad: bannerAd!),
+                      ),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 25),

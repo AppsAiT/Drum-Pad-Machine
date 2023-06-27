@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drums_pad/pages/splashScreen.dart';
 import 'package:drums_pad/services/firebase.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -11,6 +12,7 @@ void main() async {
   FirebaseFirestore.instance.settings =
       const Settings(persistenceEnabled: true);
   await FirebaseApi().initNotifications();
+  MobileAds.instance.initialize();
   runApp(const MyApp());
 }
 
