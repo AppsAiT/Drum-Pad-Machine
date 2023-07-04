@@ -11,6 +11,9 @@ class HomePagePill extends StatelessWidget {
     'Assets/genres/House.png',
     'Assets/genres/Rock.png',
     'Assets/genres/Trap.png',
+    'Assets/genres/EDM.png',
+    'Assets/genres/DubStep.png',
+    'Assets/genres/Electronic.png',
   ];
 
   @override

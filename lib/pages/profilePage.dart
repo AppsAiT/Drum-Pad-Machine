@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drums_pad/pages/homePage.dart';
 import 'package:drums_pad/pages/myAccount.dart';
 import 'package:drums_pad/pages/searchPage.dart';
+import 'package:drums_pad/services/adMob.dart';
 import 'package:drums_pad/services/auth.dart';
 import 'package:drums_pad/widgets/profileRowButton.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -76,10 +77,10 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12),
                         child: Row(
-                          children: const [
+                          children: [
                             Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text(
@@ -203,6 +204,15 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ],
                               ),
                             ),
+                          Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: ProfilePageButton(
+                              title:
+                                  'Reward Points : ${AdMobServices().rewardPoints}',
+                              icon: Icons.person,
+                              onPressed: () {},
+                            ),
+                          ),
                           Padding(
                             padding: const EdgeInsets.all(12),
                             child: ProfilePageButton(

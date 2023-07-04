@@ -49,8 +49,6 @@ class _CaroselContainerState extends State<CaroselContainer> {
 
   @override
   Widget build(BuildContext context) {
-    var icon = Icons.play_circle_fill_outlined;
-
     // void play() {
     //   if (icon == Icons.play_circle_fill_outlined) {
     //     setState(() {
@@ -70,7 +68,6 @@ class _CaroselContainerState extends State<CaroselContainer> {
         stream: widget.audioPlayer.playerStateStream,
         builder: (context, snapshot) {
           final playerState = snapshot.data;
-          final processingState = playerState?.processingState;
           final isplaying = playerState?.playing;
           return Container(
             width: 200,

@@ -10,19 +10,23 @@ class PadType1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: ver, horizontal: hor),
-      child: Container(
-        width: MediaQuery.of(context).size.width / 3 - 6,
-        height: MediaQuery.of(context).size.width / 3 - 20,
-        decoration: BoxDecoration(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 100),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: ver, horizontal: hor),
+        child: Container(
+          width: MediaQuery.of(context).size.width / 3 - 6,
+          height: MediaQuery.of(context).size.width / 3 - 20,
+          decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             gradient: const RadialGradient(
               colors: [
                 Color.fromARGB(255, 189, 248, 251),
                 Color.fromARGB(255, 10, 188, 185),
               ],
-            )),
+            ),
+          ),
+        ),
       ),
     );
   }

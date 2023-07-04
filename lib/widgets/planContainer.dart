@@ -53,7 +53,7 @@ class PlanContainer extends StatelessWidget {
             ),
           ),
           Text(
-            '\$ $PlanPrice',
+            '₹ $PlanPrice',
             style: const TextStyle(
               color: Colors.white,
               fontSize: 20,

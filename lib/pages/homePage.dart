@@ -1,12 +1,13 @@
 // ignore_for_file: file_names
 
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drums_pad/pages/loginCheck.dart';
 import 'package:drums_pad/pages/loginPage.dart';
 import 'package:drums_pad/pages/myMusicPage.dart';
 import 'package:drums_pad/pages/searchPage.dart';
 import 'package:drums_pad/pages/tutorialPage.dart';
+import 'package:drums_pad/pages/upgradePlanPage.dart';
+import 'package:drums_pad/services/adMob.dart';
 import 'package:drums_pad/services/auth.dart';
 import 'package:drums_pad/widgets/home.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +15,14 @@ import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:rxdart/rxdart.dart';
 import '../widgets/carouselContainer.dart';
 import '../widgets/containerPill.dart';
 import '../widgets/containers.dart';
 import '../widgets/navigationButtons.dart';
 import '../widgets/sideBar.dart';
 import 'package:loading_indicator/loading_indicator.dart';
+
+import 'drumpadScreen.dart';
 
 const List<Color> _kDefaultRainbowColors = [
   Colors.red,
@@ -46,7 +48,8 @@ class _MyHomePageState extends State<MyHomePage> {
   late final RewardedAd rewardedAd;
   final String adUnitId = "ca-app-pub-3940256099942544/5224354917";
   BannerAd? _bannerAd;
-  bool _bannerIsLoaded = false;
+  bool _bannerIsLoaded = false, isPremium = false;
+  var points = 0;
 
   @override
   void initState() {
@@ -89,16 +92,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _loadRewardedAd() {
     RewardedAd.load(
-        adUnitId: adUnitId,
-        request: const AdRequest(),
-        rewardedAdLoadCallback:
-            RewardedAdLoadCallback(onAdLoaded: (RewardedAd ad) {
+      adUnitId: adUnitId,
+      request: const AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (RewardedAd ad) {
           print('$ad loaded');
           rewardedAd = ad;
           _setFullScreenContentCallBack();
-        }, onAdFailedToLoad: (LoadAdError error) {
+        },
+        onAdFailedToLoad: (LoadAdError error) {
           print('Error : $error');
-        }));
+        },
+      ),
+    );
   }
 
   void _setFullScreenContentCallBack() {
@@ -109,6 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
       onAdDismissedFullScreenContent: (RewardedAd ad) {
         print('$ad onAdDismissedFullScreenContent');
         ad.dispose();
+        _loadRewardedAd();
       },
       onAdFailedToShowFullScreenContent: (ad, error) {
         print('$ad onAdFailedToShowedFullScreenContent Error : $error');
@@ -119,8 +126,20 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _showAd() {
+    var user = Auth().currentUser;
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      points = value.data()!['rewardPoints'] ?? 0;
+    });
     rewardedAd.show(onUserEarnedReward: (ad, rewardItem) {
-      num amount = rewardItem.amount;
+      points = points + rewardItem.amount.toInt();
+      print('=================> Reward points : ${points}');
+      FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+        'rewardPoints': points,
+      });
     });
   }
 
@@ -137,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<QuerySnapshot<Map<String, dynamic>>> fetchDataFromFirebase() async {
-    return FirebaseFirestore.instance.collection('DemoSongs').get();
+    return FirebaseFirestore.instance.collection('Songs').get();
   }
 
   checkSubscription() async {
@@ -150,6 +169,7 @@ class _MyHomePageState extends State<MyHomePage> {
             .get()
             .then((value) {
           if (value.data()!['premium'] == true) {
+            isPremium = true;
             var date = value.data()!['expiry'].toDate().toUtc();
             if (!DateTime.now().toUtc().isBefore(date)) {
               FirebaseFirestore.instance
@@ -188,6 +208,47 @@ class _MyHomePageState extends State<MyHomePage> {
     LoginPage(pageKey: 1),
   ];
 
+  check(data) {
+    var user = Auth().currentUser;
+    if (user != null) {
+      if (data['premium']) {
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .get()
+            .then((value) {
+          if (value.data()!['premium'] == true) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DrumPadPage(link: data['songUrl']),
+              ),
+            );
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const UpgradePlanPage()),
+            );
+          }
+        });
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DrumPadPage(
+              link: data['songUrl'],
+            ),
+          ),
+        );
+      }
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage(pageKey: 1)),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> screens = [
@@ -214,10 +275,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Column(
                       children: [
                         const SizedBox(height: 80),
-                        Padding(
-                          padding: const EdgeInsets.all(12),
+                        const Padding(
+                          padding: EdgeInsets.all(12),
                           child: Row(
-                            children: const [
+                            children: [
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 10),
                                 child: Text(
@@ -281,13 +342,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                           trendingSongs[itemIndex].data();
                                       return Padding(
                                         padding: const EdgeInsets.all(5),
-                                        child: CaroselContainer(
-                                          title: data['title'],
-                                          subTitle: data['subTitle'],
-                                          imgeUrl: data['imgUrl'],
-                                          premium: data['premium'],
-                                          song: data['songUrl'],
-                                          audioPlayer: homeAudioPlayer,
+                                        child: InkWell(
+                                          onTap: () {
+                                            check(data);
+                                          },
+                                          child: CaroselContainer(
+                                            title: data['title'],
+                                            subTitle: data['subTitle'],
+                                            imgeUrl: data['imgUrl'],
+                                            premium: data['premium'],
+                                            song: data['songUrl'],
+                                            audioPlayer: homeAudioPlayer,
+                                          ),
                                         ),
                                       );
                                     } else {
@@ -320,18 +386,20 @@ class _MyHomePageState extends State<MyHomePage> {
                           padding: const EdgeInsets.all(12),
                           child: Row(
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 5),
-                                child: Text(
-                                  'Genres',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 23,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
+                              Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
+                                  child: InkWell(
+                                    onTap: _showAd,
+                                    child: const Text(
+                                      'Genres',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 23,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  )),
                               const Spacer(),
                               InkWell(
                                 onTap: () {},
@@ -352,16 +420,16 @@ class _MyHomePageState extends State<MyHomePage> {
                         SizedBox(
                           height: 180,
                           child: ListView.builder(
-                            itemCount: 4,
+                            itemCount: 7,
                             itemBuilder: (context, index) =>
                                 HomePagePill(Index: index),
                             scrollDirection: Axis.horizontal,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(12),
+                        const Padding(
+                          padding: EdgeInsets.all(12),
                           child: Row(
-                            children: const [
+                            children: [
                               Padding(
                                 padding: EdgeInsets.only(
                                     left: 10, bottom: 5, top: 10),
@@ -410,7 +478,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             return SizedBox(
                               height: 170,
                               child: ListView.builder(
-                                itemCount: documents.length,
+                                itemCount: 15,
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
                                   Map<String, dynamic> data =
@@ -429,10 +497,10 @@ class _MyHomePageState extends State<MyHomePage> {
                             );
                           },
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(12),
+                        const Padding(
+                          padding: EdgeInsets.all(12),
                           child: Row(
-                            children: const [
+                            children: [
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 10),
                                 child: Text(
@@ -493,11 +561,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                     color:
                                         const Color.fromARGB(255, 40, 41, 52),
                                   ),
-                                  child: Center(
+                                  child: const Center(
                                       child: Padding(
-                                    padding: const EdgeInsets.all(10),
+                                    padding: EdgeInsets.all(10),
                                     child: Row(
-                                      children: const [
+                                      children: [
                                         Icon(
                                           Icons.search,
                                           color: Colors.grey,

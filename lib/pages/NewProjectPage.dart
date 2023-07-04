@@ -104,7 +104,9 @@ class _NewProjectPageState extends State<NewProjectPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const DrumPadPage(),
+                    builder: (context) => const DrumPadPage(
+                        link:
+                            'https://firebasestorage.googleapis.com/v0/b/drumpad-appsait.appspot.com/o/songs%2FBangalore%20Days%20Wedding%20Song%20%20Maangalyam%20%20Dulquer%20Salmaan%20%20Nivin%20Pauly%20%20Fahadh%20Faasil%20%20Nazriya.mp3?alt=media&token=de99dbaf-1292-4667-8dd7-bd4eadd5a80a'),
                   ),
                 );
               },

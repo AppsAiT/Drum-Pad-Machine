@@ -1,5 +1,7 @@
 // ignore_for_file: file_names
 
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drums_pad/constants.dart';
 import 'package:drums_pad/pages/homePage.dart';
@@ -22,7 +24,7 @@ class _UpgradePlanPageState extends State<UpgradePlanPage> {
   int selectedPlan = 0;
   String? loadingstatus;
   final _razorpay = Razorpay();
-  double? total;
+  int? total;
   String? name;
   String? description;
   User? user;
@@ -275,9 +277,9 @@ class _UpgradePlanPageState extends State<UpgradePlanPage> {
                           ],
                         ),
                       ),
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Padding(
                             padding: EdgeInsets.only(top: 15),
                             child: SizedBox(
@@ -343,13 +345,13 @@ class _UpgradePlanPageState extends State<UpgradePlanPage> {
                                   selectedPlan = 1;
                                   total = gold['amount'];
                                   name = 'Gold';
-                                  description = 'Monthly';
+                                  description = '1 Month';
                                 });
                               },
                               child: PlanContainer(
                                 PlanText: 'Gold',
                                 PlanPrice: gold['amount'].toString(),
-                                PlanDuration: 'Monthly',
+                                PlanDuration: '1 Month',
                                 image: 'goldPlan.png',
                                 pageIndex: 1,
                                 selection: selectedPlan,
@@ -362,13 +364,13 @@ class _UpgradePlanPageState extends State<UpgradePlanPage> {
                                   selectedPlan = 2;
                                   total = diamond['amount'];
                                   name = 'Diamond';
-                                  description = '6 months';
+                                  description = '3 months';
                                 });
                               },
                               child: PlanContainer(
                                 PlanText: 'Diamond',
                                 PlanPrice: diamond['amount'].toString(),
-                                PlanDuration: 'Monthly',
+                                PlanDuration: '3 Months',
                                 image: 'diamondPlan.png',
                                 pageIndex: 2,
                                 selection: selectedPlan,
@@ -381,13 +383,13 @@ class _UpgradePlanPageState extends State<UpgradePlanPage> {
                                   selectedPlan = 3;
                                   total = platinum['amount'];
                                   name = 'Platinum';
-                                  description = 'Yearly';
+                                  description = '12 Months';
                                 });
                               },
                               child: PlanContainer(
                                 PlanText: 'Platinum',
                                 PlanPrice: platinum['amount'].toString(),
-                                PlanDuration: 'Monthly',
+                                PlanDuration: '12 Months',
                                 image: 'platinumPlan.png',
                                 pageIndex: 3,
                                 selection: selectedPlan,
@@ -443,9 +445,9 @@ class _UpgradePlanPageState extends State<UpgradePlanPage> {
                               color: Colors.cyan,
                               borderRadius: BorderRadius.circular(30),
                             ),
-                            child: Row(
+                            child: const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
+                              children: [
                                 Text(
                                   'Upgrade',
                                   style: TextStyle(

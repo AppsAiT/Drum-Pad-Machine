@@ -44,9 +44,9 @@ class _PermissionPageState extends State<PermissionPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 80),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Text(
                     'Create your beat on the go!',
                     style: TextStyle(
