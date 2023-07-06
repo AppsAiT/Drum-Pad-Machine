@@ -93,6 +93,10 @@ class _DrumPadPageState extends State<DrumPadPage> {
   void initState() {
     super.initState();
     final audioSource = LockCachingAudioSource(Uri.parse(widget.link));
+    final tune1 = LockCachingAudioSource(Uri.parse(
+        'https://firebasestorage.googleapis.com/v0/b/drumpad-appsait.appspot.com/o/Songs%2Ftunes%2FchaseMoney.wav?alt=media&token=61829d7d-eed8-45df-bafd-f6dc883ba9df'));
+    final tune2 = LockCachingAudioSource(Uri.parse(
+        'https://firebasestorage.googleapis.com/v0/b/drumpad-appsait.appspot.com/o/Songs%2Ftunes%2FdrumFill.wav?alt=media&token=a55d431e-d353-4694-99d3-be87f0c8e74b'));
     VolumeController().listener((volume) {
       setState(() => _volumeListenerValue = volume);
     });
@@ -101,6 +105,8 @@ class _DrumPadPageState extends State<DrumPadPage> {
     audioPlayerA2 = AudioPlayer()..setAudioSource(audioSource);
     audioPlayerA3 = AudioPlayer()..setAudioSource(audioSource);
     audioPlayerA4 = AudioPlayer()..setAudioSource(audioSource);
+    audioPlayerA5 = AudioPlayer()..setAudioSource(tune1);
+    audioPlayerA6 = AudioPlayer()..setAudioSource(tune2);
     audioPlayerA10 = AudioPlayer()..setAudioSource(audioSource3);
 
     audioPlayerB1 = AudioPlayer()..setAudioSource(audioSource);
@@ -280,7 +286,7 @@ class _DrumPadPageState extends State<DrumPadPage> {
                         audioPlayer1: audioPlayerA1,
                         audioPlayer2: audioPlayerA2,
                         audioPlayer3: audioPlayerA3,
-                        audioPlayer4: audioPlayerA4,
+                        audioPlayer4: audioPlayerA5,
                         duration: duration ~/ 8,
                       ),
                       backBuilder: (_) => FullDrumPadB(

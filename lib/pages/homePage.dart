@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:drums_pad/pages/genreSongList.dart';
 import 'package:drums_pad/pages/loginCheck.dart';
 import 'package:drums_pad/pages/loginPage.dart';
 import 'package:drums_pad/pages/myMusicPage.dart';
@@ -17,7 +18,6 @@ import 'package:just_audio/just_audio.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../widgets/carouselContainer.dart';
 import '../widgets/containerPill.dart';
-import '../widgets/containers.dart';
 import '../widgets/navigationButtons.dart';
 import '../widgets/sideBar.dart';
 import 'package:loading_indicator/loading_indicator.dart';
@@ -44,50 +44,55 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late AudioPlayer homeAudioPlayer;
+  late AudioPlayer homeAudioPlayer, homeAudioPlayer2;
   late final RewardedAd rewardedAd;
-  final String adUnitId = "ca-app-pub-3940256099942544/5224354917";
-  BannerAd? _bannerAd;
+  final String adUnitId = "ca-app-pub-3940256099942544/6300978111"; //testing ID
+  late BannerAd _bannerAd;
   bool _bannerIsLoaded = false, isPremium = false;
   var points = 0;
+  bool isPremiumMember = false;
 
   @override
   void initState() {
     requestPermission();
     checkSubscription();
-    _loadRewardedAd();
+    // _loadRewardedAd();
     _createBannerAdd();
+    checkPremium();
     homeAudioPlayer = AudioPlayer();
-
+    homeAudioPlayer2 = AudioPlayer();
     super.initState();
   }
 
   @override
   void dispose() {
     homeAudioPlayer.dispose();
+    homeAudioPlayer2.dispose();
+    _bannerAd.dispose();
     super.dispose();
   }
 
   void _createBannerAdd() {
-    print('=====================================================');
-    setState(() {
-      _bannerAd = BannerAd(
-        size: AdSize.fullBanner,
-        adUnitId: 'ca-app-pub-9046870668611822/5049886088',
-        request: const AdRequest(),
-        listener: BannerAdListener(
-          onAdLoaded: (ad) => print('Ad Loaded'),
-          onAdFailedToLoad: (ad, error) {
-            ad.dispose();
-            print('Ad Failed to Load : $error');
-          },
-          onAdOpened: (ad) => print('Ad Opened'),
-          onAdClosed: (ad) => print('Ad Closed'),
-        ),
-      )..load();
-
-      _bannerIsLoaded = true;
-    });
+    _bannerAd = BannerAd(
+      size: AdSize.banner,
+      adUnitId: adUnitId,
+      request: const AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          print('Ad Loaded');
+          setState(() {
+            _bannerIsLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          print('Ad Failed to Load : $error');
+        },
+        // onAdOpened: (ad) => print('Ad Opened'),
+        // onAdClosed: (ad) => print('Ad Closed'),
+      ),
+    );
+    _bannerAd.load();
   }
 
   void _loadRewardedAd() {
@@ -141,6 +146,23 @@ class _MyHomePageState extends State<MyHomePage> {
         'rewardPoints': points,
       });
     });
+  }
+
+  checkPremium() {
+    var user = Auth().currentUser;
+    if (user != null) {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get()
+          .then((value) {
+        if (value.data()!['premium']) {
+          setState(() {
+            isPremiumMember = true;
+          });
+        }
+      });
+    }
   }
 
   void requestPermission() async {
@@ -203,7 +225,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var currentIndex = 0;
 
   List<Widget> pages = [
-    const Home(),
+    Home(),
     const MyMusicPage(),
     LoginPage(pageKey: 1),
   ];
@@ -217,7 +239,7 @@ class _MyHomePageState extends State<MyHomePage> {
             .doc(user.uid)
             .get()
             .then((value) {
-          if (value.data()!['premium'] == true) {
+          if (value.data()!['premium']) {
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -252,25 +274,23 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     List<Widget> screens = [
-      const Home(),
+      Home(),
       const MyMusicPage(),
-      LoginCheckPage(
-        page: const TutorialPage(),
-      ),
+      LoginCheckPage(page: const TutorialPage()),
       // const TutorialPage(),
     ];
 
     double displayWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      drawer: SideBar(bannerAd: _bannerAd, loaded: _bannerIsLoaded),
+      drawer: SideBar(),
       body: currentIndex == 0
           ? Stack(
               children: [
                 SingleChildScrollView(
                   child: Container(
                     width: double.infinity,
-                    height: 1000,
+                    height: 900,
                     color: Colors.black,
                     child: Column(
                       children: [
@@ -382,6 +402,14 @@ class _MyHomePageState extends State<MyHomePage> {
                             );
                           },
                         ),
+                        if (!isPremiumMember)
+                          (_bannerIsLoaded)
+                              ? SizedBox(
+                                  height: _bannerAd.size.height.toDouble(),
+                                  width: _bannerAd.size.width.toDouble(),
+                                  child: AdWidget(ad: _bannerAd),
+                                )
+                              : const SizedBox(),
                         Padding(
                           padding: const EdgeInsets.all(12),
                           child: Row(
@@ -402,7 +430,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                   )),
                               const Spacer(),
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              SongListGenre()));
+                                },
                                 child: const Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 10),
                                   child: Text(
@@ -474,9 +508,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                   child: Text('No data available'));
                             }
                             // Data is available, display it
-                            final documents = snapshot.data!.docs;
+                            List documents = snapshot.data!.docs;
+                            documents.shuffle();
                             return SizedBox(
-                              height: 170,
+                              height: 190,
                               child: ListView.builder(
                                 itemCount: 15,
                                 scrollDirection: Axis.horizontal,
@@ -485,11 +520,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                       documents[index].data();
                                   return Padding(
                                     padding: const EdgeInsets.all(6),
-                                    child: HomePageContainer(
-                                      title: data['title'],
-                                      subTitle: data['subTitle'],
-                                      imgeUrl: data['imgUrl'],
-                                      premium: data['premium'],
+                                    child: InkWell(
+                                      onTap: () {
+                                        check(data);
+                                      },
+                                      child: CaroselContainer(
+                                        title: data['title'],
+                                        subTitle: data['subTitle'],
+                                        imgeUrl: data['imgUrl'],
+                                        premium: data['premium'],
+                                        song: data['songUrl'],
+                                        audioPlayer: homeAudioPlayer2,
+                                      ),
                                     ),
                                   );
                                 },
@@ -497,24 +539,24 @@ class _MyHomePageState extends State<MyHomePage> {
                             );
                           },
                         ),
-                        const Padding(
-                          padding: EdgeInsets.all(12),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(
-                                  'Most Popular',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 23,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        // const Padding(
+                        //   padding: EdgeInsets.all(12),
+                        //   child: Row(
+                        //     children: [
+                        //       Padding(
+                        //         padding: EdgeInsets.symmetric(horizontal: 10),
+                        //         child: Text(
+                        //           'Most Popular',
+                        //           style: TextStyle(
+                        //             color: Colors.white,
+                        //             fontSize: 23,
+                        //             fontWeight: FontWeight.bold,
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

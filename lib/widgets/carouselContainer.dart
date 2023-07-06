@@ -96,7 +96,7 @@ class _CaroselContainerState extends State<CaroselContainer> {
                         ),
                       ),
                     ),
-                    ((isplaying ?? false))
+                    (isplaying ?? false)
                         ? Container(
                             height: 150,
                             color: const Color.fromARGB(127, 0, 0, 0),
@@ -109,22 +109,6 @@ class _CaroselContainerState extends State<CaroselContainer> {
                                   height: 50,
                                 ),
                               ),
-                              // child: ProgressBar(
-                              //   progress:
-                              //       positionData?.position ?? Duration.zero,
-                              //   buffered: positionData?.bufferedPosition ??
-                              //       Duration.zero,
-                              //   total:
-                              //       positionData?.duration ?? Duration.zero,
-                              //   progressBarColor: Colors.red,
-                              //   baseBarColor:
-                              //       Colors.white.withOpacity(0.24),
-                              //   bufferedBarColor:
-                              //       Colors.white.withOpacity(0.24),
-                              //   thumbColor: Colors.white,
-                              //   barHeight: 3.0,
-                              //   thumbRadius: 5.0,
-                              // ),
                             ),
                           )
                         : Container(),

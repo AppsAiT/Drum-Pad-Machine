@@ -73,7 +73,6 @@ class _FullDrumPadAState extends State<FullDrumPadA> {
             children: [
               ZoomTapAnimation(
                 onTap: () {
-                  // widget.audioPlayer1.seek(const Duration(seconds: 0));
                   playButton(widget.audioPlayer1, 0);
                   print('1');
                 },
@@ -101,6 +100,9 @@ class _FullDrumPadAState extends State<FullDrumPadA> {
             children: [
               ZoomTapAnimation(
                 onTap: () {
+                  widget.audioPlayer4.stop();
+                  widget.audioPlayer4.seek(Duration.zero);
+                  widget.audioPlayer4.play();
                   print('4');
                 },
                 child: const PadType6(),
@@ -113,8 +115,8 @@ class _FullDrumPadAState extends State<FullDrumPadA> {
               ),
               ZoomTapAnimation(
                 onTap: () {
-                  widget.audioPlayer4
-                      .seek(Duration(seconds: widget.duration * 3));
+                  // widget.audioPlayer4
+                  //     .seek(Duration(seconds: widget.duration * 3));
                   playButton(widget.audioPlayer4, widget.duration * 3);
                   print('6');
                 },

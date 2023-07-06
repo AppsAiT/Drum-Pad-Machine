@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 
 import '../pages/searchPage.dart';
 import 'containerPill.dart';
@@ -7,7 +8,8 @@ import 'containers.dart';
 import 'sideBar.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key});
+  Home({super.key});
+  late AudioPlayer player;
 
   @override
   Widget build(BuildContext context) {
@@ -138,6 +140,7 @@ class Home extends StatelessWidget {
                           premium: index + 1 == " " ? true : false,
                           imgeUrl:
                               'https://t3.ftcdn.net/jpg/04/79/81/76/360_F_479817672_BpTyGX9qAl3rs9mHqvQUsyWXTJrkLUII.jpg',
+                          audioPlayer: player,
                         ),
                       ),
                     ),

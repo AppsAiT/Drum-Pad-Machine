@@ -7,12 +7,16 @@ import 'constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
+  // var testDevices = ['84924d7d-5ad8-444b-80f0-b870ac22c827'];
   WidgetsFlutterBinding.ensureInitialized();
+  await MobileAds.instance.initialize();
   await Firebase.initializeApp();
   FirebaseFirestore.instance.settings =
       const Settings(persistenceEnabled: true);
   await FirebaseApi().initNotifications();
-  MobileAds.instance.initialize();
+
+  // RequestConfiguration requestConfiguration =
+  //     RequestConfiguration(testDeviceIds: testDevices);
   runApp(const MyApp());
 }
 
